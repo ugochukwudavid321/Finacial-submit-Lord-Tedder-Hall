@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lord Tedder Hall Finance Summit 2026</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      backgroundSize: {
+        '200': '200% 200%',
+      },
+    }
+  }
+}
+</script>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes shimmer { 100% { transform: translateX(100%); } }
+@keyframes bgSize200 { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+.animate-fadeIn { animation: fadeIn 0.3s ease-out forwards; }
+.animate-shimmer { animation: shimmer 1.5s infinite; }
+.bg-size-200 { background-size: 200% 200%; animation: bgSize200 4s ease infinite; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+const GOOGLE_FORM_URL = "https://forms.google.com";
+
+function Sparkles({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+    </svg>
+  );
+}
+
+function BookOpen({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+    </svg>
+  );
+}
+
+function TrendingUp({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+    </svg>
+  );
+}
+
+function Users({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+    </svg>
+  );
+}
+
+function CheckCircle2({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+    </svg>
+  );
+}
+
+function ArrowRight({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+    </svg>
+  );
+}
+
+function ChevronDown({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+    </svg>
+  );
+}
+
+function Menu({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
+    </svg>
+  );
+}
+
+function X({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+    </svg>
+  );
+}
+
+function Camera({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+    </svg>
+  );
+}
+
+function Video({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+    </svg>
+  );
+}
+
+function Palette({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 73.571V7a1 1 0 011-1h2a1 1 0 011 1v4.571M12 11h.01"></path>
+    </svg>
+  );
+}
+
+function Code({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+    </svg>
+  );
+}
+
+function Scissors({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758a3 3 0 10-4.243 4.243 3 3 0 004.243-4.243zm0-9.516a3 3 0 10-4.243-4.243 3 3 0 004.243 4.243z"></path>
+    </svg>
+  );
+}
+
+function Layers({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+    </svg>
+  );
+}
+
+function Award({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15l-3.597 1.898.687-4.004L6.34 9.99l4.02-.584L12 5.75l1.64 3.656 4.02.584-2.75 2.904.687 4.004L12 15z"></path>
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 21l-3-2-3 2"></path>
+    </svg>
+  );
+}
+
+function ExternalLink({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+    </svg>
+  );
+}
+
+function MapPin({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+    </svg>
+  );
+}
+
+function Calendar({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+    </svg>
+  );
+}
+
+function Clock({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+    </svg>
+  );
+}
+
+function HelpCircle({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+    </svg>
+  );
+}
+
+function Share2({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
+    </svg>
+  );
+}
+
+function Check({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+    </svg>
+  );
+}
+
+function Sun({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+    </svg>
+  );
+}
+
+function Moon({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+    </svg>
+  );
+}
+
+function App() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [selectedSkill, setSelectedSkill] = useState('');
+  const [activeTab, setActiveTab] = useState('all');
+  const [submitted, setSubmitted] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [isDark, setIsDark] = useState(true);
+  
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    studentId: '',
+    skill: '',
+    department: '',
+    phone: ''
+  });
+
+  useEffect(() => {
+    if (selectedSkill) {
+      setFormData(prev => ({ ...prev, skill: selectedSkill }));
+    }
+  }, [selectedSkill]);
+
+  const handleSkillSelect = (skillTitle) => {
+    setSelectedSkill(skillTitle);
+    showToast(`Selected "${skillTitle}". Form updated!`);
+    const formElement = document.getElementById('register');
+    if (formElement) {
+      formElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const showToast = (msg) => {
+    setToastMessage(msg);
+    setTimeout(() => {
+      setToastMessage('');
+    }, 4000);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!formData.fullName || !formData.email || !formData.skill) {
+      showToast('Please fill in all required fields!');
+      return;
+    }
+    setSubmitted(true);
+    showToast('Registration submitted successfully!');
+  };
+
+  const scrollToSection = (id) => {
+    setMobileMenuOpen(false);
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleShare = () => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      showToast('Page link copied to clipboard!');
+    }).catch(() => {
+      showToast('Failed to copy link.');
+    });
+  };
+
+  return (
+    <div className={`min-h-screen ${isDark ? 'bg-[#0D1B2A] text-slate-100' : 'bg-slate-50 text-slate-900'} font-sans selection:bg-[#00B4D8] selection:text-white relative overflow-x-hidden transition-colors duration-300`}>
+      
+      <ParticleCanvas/>
+
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 z-50 bg-[#00B4D8] text-slate-950 px-5 py-3 rounded-xl shadow-2xl font-bold flex items-center gap-3 animate-bounce border border-cyan-200">
+          <Sparkles className="w-5 h-5"/>
+          <span>{toastMessage}</span>
+        </div>
+      )}
+
+      <header className={`sticky top-0 z-40 backdrop-blur-md ${isDark ? 'bg-[#0D1B2A]/80 border-slate-800/80' : 'bg-white/80 border-slate-200'} border-b transition-all duration-300`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-20">
+            <div 
+              onClick={() => scrollToSection('hero')} 
+              className="cursor-pointer flex items-center gap-3 group"
+            >
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#00B4D8] to-[#90E0EF] flex items-center justify-center font-black text-slate-950 shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform">
+                LTH
+              </div>
+              <div>
+                <span className={`font-extrabold text-lg tracking-tight block ${isDark ? 'text-white' : 'text-slate-900'} leading-none`}>
+                  LORD TEDDER HALL
+                </span>
+                <span className="text-xs text-[#00B4D8] font-medium tracking-wider uppercase">
+                  Finance Summit '26
+                </span>
+              </div>
+            </div>
+
+            <nav className={`hidden md:flex items-center gap-8 font-medium text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+              <button onClick={() => scrollToSection('about')} className="hover:text-[#00B4D8] transition-colors">About</button>
+              <button onClick={() => scrollToSection('speakers')} className="hover:text-[#00B4D8] transition-colors">Contributors</button>
+              <button onClick={() => scrollToSection('skills')} className="hover:text-[#00B4D8] transition-colors">Skills Directory</button>
+              <button onClick={() => scrollToSection('process')} className="hover:text-[#00B4D8] transition-colors">How It Works</button>
+            </nav>
+
+            <div className="hidden md:flex items-center gap-4">
+              <button 
+                onClick={() => setIsDark(!isDark)}
+                className={`p-2.5 rounded-xl ${isDark ? 'bg-slate-800 text-amber-400' : 'bg-slate-200 text-slate-800'} hover:scale-105 transition-all`}
+                title="Toggle Theme"
+              >
+                {isDark ? <Sun className="w-4 h-4"/> : <Moon className="w-4 h-4"/>}
+              </button>
+
+              <button 
+                onClick={() => scrollToSection('register')} 
+                className="relative inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold text-slate-950 transition-all duration-300 bg-gradient-to-r from-[#00B4D8] via-[#90E0EF] to-[#00B4D8] bg-size-200 hover:bg-right rounded-xl shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:-translate-y-0.5 active:translate-y-0"
+              >
+                Register Now
+                <ArrowRight className="w-4 h-4 ml-1.5"/>
+              </button>
+            </div>
+
+            <div className="md:hidden flex items-center gap-2">
+              <button 
+                onClick={() => setIsDark(!isDark)}
+                className={`p-2 rounded-lg ${isDark ? 'bg-slate-800 text-amber-400' : 'bg-slate-200 text-slate-800'}`}
+              >
+                {isDark ? <Sun className="w-5 h-5"/> : <Moon className="w-5 h-5"/>}
+              </button>
+
+              <button 
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className={`p-2 rounded-lg ${isDark ? 'bg-slate-800/60 text-slate-300' : 'bg-slate-200 text-slate-800'} hover:text-white focus:outline-none`}
+              >
+                {mobileMenuOpen ? <X className="w-6 h-6"/> : <Menu className="w-6 h-6"/>}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {mobileMenuOpen && (
+          <div className={`md:hidden ${isDark ? 'bg-[#1B263B] border-slate-700/60 text-slate-200' : 'bg-white border-slate-200 text-slate-800'} border-b px-4 pt-2 pb-6 space-y-3 animate-fadeIn`}>
+            <button 
+              onClick={() => scrollToSection('about')} 
+              className="block w-full text-left px-3 py-2 rounded-lg font-medium hover:bg-slate-800/20"
+            >
+              About
+            </button>
+            <button 
+              onClick={() => scrollToSection('speakers')} 
+              className="block w-full text-left px-3 py-2 rounded-lg font-medium hover:bg-slate-800/20"
+            >
+              Contributors
+            </button>
+            <button 
+              onClick={() => scrollToSection('skills')} 
+              className="block w-full text-left px-3 py-2 rounded-lg font-medium hover:bg-slate-800/20"
+            >
+              Skills Directory
+            </button>
+            <button 
+              onClick={() => scrollToSection('process')} 
+              className="block w-full text-left px-3 py-2 rounded-lg font-medium hover:bg-slate-800/20"
+            >
+              How It Works
+            </button>
+            <button 
+              onClick={() => scrollToSection('register')} 
+              className="w-full mt-2 py-3 bg-[#00B4D8] text-slate-950 font-bold rounded-xl text-center shadow-lg shadow-cyan-500/20"
+            >
+              Register Now
+            </button>
+          </div>
+        )}
+      </header>
+
+      <section id="hero" className="relative min-h-[calc(100vh-80px)] flex items-center justify-center pt-12 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <div className="max-w-5xl mx-auto text-center relative z-10">
+          
+          <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${isDark ? 'bg-cyan-950/60 border-[#00B4D8]/30 text-[#00B4D8]' : 'bg-cyan-50 border-cyan-200 text-cyan-700'} text-xs sm:text-sm font-semibold tracking-wide uppercase mb-8 shadow-inner animate-pulse`}>
+            <Sparkles className="w-4 h-4"/>
+            <span>Lord Tedder Hall Flagship Event</span>
+          </div>
+
+          <h1 className={`text-4xl sm:text-6xl md:text-7xl font-black tracking-tight ${isDark ? 'text-white' : 'text-slate-900'} mb-6 leading-none`}>
+            2026 FINANCE SUMMIT <br className="hidden sm:inline" />
+            <span className="bg-gradient-to-r from-[#00B4D8] via-[#90E0EF] to-[#E0A96D] bg-clip-text text-transparent">
+              & SKILL ACQUISITION
+            </span>
+          </h1>
+
+          <p className="text-2xl sm:text-3xl font-extrabold text-[#00B4D8] mb-6 tracking-wide">
+            Learn. Earn. Grow.
+          </p>
+
+          <p className={`max-w-3xl mx-auto text-base sm:text-lg ${isDark ? 'text-slate-300' : 'text-slate-600'} leading-relaxed mb-10 font-normal`}>
+            Discover practical skills, explore new income opportunities, and learn directly from Tedderites who are actively building successful businesses while navigating student life.
+          </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 mb-12 text-sm font-medium">
+            <div className={`flex items-center gap-2 px-4 py-2 rounded-lg ${isDark ? 'bg-slate-900/60 border-slate-800 text-slate-300' : 'bg-white border-slate-200 text-slate-700 shadow-sm'}`}>
+              <MapPin className="w-4 h-4 text-[#00B4D8]"/>
+              <span>Lord Tedder Hall, UI</span>
+            </div>
+            <div className={`flex items-center gap-2 px-4 py-2 rounded-lg ${isDark ? 'bg-slate-900/60 border-slate-800 text-slate-300' : 'bg-white border-slate-200 text-slate-700 shadow-sm'}`}>
+              <Calendar className="w-4 h-4 text-[#00B4D8]"/>
+              <span>Coming Soon 2026</span>
+            </div>
+            <div className={`flex items-center gap-2 px-4 py-2 rounded-lg ${isDark ? 'bg-slate-900/60 border-slate-800 text-slate-300' : 'bg-white border-slate-200 text-slate-700 shadow-sm'}`}>
+              <Users className="w-4 h-4 text-[#00B4D8]"/>
+              <span>Limited Slots</span>
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+            <button
+              onClick={() => scrollToSection('skills')}
+              className={`w-full sm:w-auto px-8 py-4 rounded-xl ${isDark ? 'bg-slate-800 hover:bg-slate-700 text-white border-slate-700/80' : 'bg-white hover:bg-slate-100 text-slate-800 border-slate-200 shadow-md'} font-bold text-base transition-all duration-300 border flex items-center justify-center gap-2 group`}
+            >
+              <span>Explore The Skills</span>
+              <ChevronDown className="w-5 h-5 text-[#00B4D8] group-hover:translate-y-1 transition-transform"/>
+            </button>
+
+            <button
+              onClick={() => scrollToSection('register')}
+              className="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-[#00B4D8] to-[#90E0EF] text-slate-950 font-extrabold text-base transition-all duration-300 shadow-xl shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2"
+            >
+              <span>Register Now</span>
+              <ArrowRight className="w-5 h-5"/>
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+      <section id="about" className={`py-24 ${isDark ? 'bg-[#1B263B]/40 border-slate-800/80' : 'bg-slate-100 border-slate-200'} relative border-t border-b`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-xs font-bold uppercase tracking-widest text-[#00B4D8] mb-3">About The Programme</h2>
+            <p className={`text-3xl sm:text-4xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>Two experiences. One opportunity.</p>
+            <p className={`mt-4 ${isDark ? 'text-slate-300' : 'text-slate-600'} text-base sm:text-lg`}>
+              Designed specifically to help Tedderites take charge of their financial future through theoretical insight and actionable mastery.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className={`group relative rounded-3xl ${isDark ? 'bg-gradient-to-b from-[#1B263B] to-[#0D1B2A] border-slate-700/60' : 'bg-white border-slate-200 shadow-xl'} p-8 sm:p-10 border hover:border-[#00B4D8]/50 transition-all duration-300 flex flex-col justify-between`}>
+              <div>
+                <div className="flex items-center justify-between mb-8">
+                  <div className="w-14 h-14 rounded-2xl bg-[#00B4D8]/10 text-[#00B4D8] flex items-center justify-center border border-[#00B4D8]/30 group-hover:scale-110 transition-transform">
+                    <TrendingUp className="w-7 h-7"/>
+                  </div>
+                  <span className={`text-4xl font-black ${isDark ? 'text-slate-700' : 'text-slate-200'} group-hover:text-[#00B4D8]/40 transition-colors`}>01</span>
+                </div>
+                
+                <h3 className="text-xs font-semibold tracking-wider text-[#00B4D8] uppercase mb-2">Part One</h3>
+                <h4 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-slate-900'} mb-4`}>FINANCE SUMMIT</h4>
+                <p className={`text-lg font-medium ${isDark ? 'text-slate-200' : 'text-slate-800'} mb-4`}>"Three journeys. Three perspectives."</p>
+                <p className={`${isDark ? 'text-slate-400' : 'text-slate-600'} text-sm leading-relaxed mb-6`}>
+                  Hear directly from three Tedderites who have successfully built income-generating ventures. Gain real-world intelligence on how they generate, manage, and scale income while pursuing academic excellence.
+                </p>
+              </div>
+
+              <div className={`pt-6 border-t ${isDark ? 'border-slate-800/80 text-slate-400' : 'border-slate-100 text-slate-500'} flex items-center justify-between text-xs font-medium`}>
+                <span>Keynote & Panel Discussions</span>
+                <span className="text-[#00B4D8]">3 Guest Speakers</span>
+              </div>
+            </div>
+
+            <div className={`group relative rounded-3xl ${isDark ? 'bg-gradient-to-b from-[#1B263B] to-[#0D1B2A] border-slate-700/60' : 'bg-white border-slate-200 shadow-xl'} p-8 sm:p-10 border hover:border-[#E0A96D]/50 transition-all duration-300 flex flex-col justify-between`}>
+              <div>
+                <div className="flex items-center justify-between mb-8">
+                  <div className="w-14 h-14 rounded-2xl bg-[#E0A96D]/10 text-[#E0A96D] flex items-center justify-center border border-[#E0A96D]/30 group-hover:scale-110 transition-transform">
+                    <BookOpen className="w-7 h-7"/>
+                  </div>
+                  <span className={`text-4xl font-black ${isDark ? 'text-slate-700' : 'text-slate-200'} group-hover:text-[#E0A96D]/40 transition-colors`}>02</span>
+                </div>
+                
+                <h3 className="text-xs font-semibold tracking-wider text-[#E0A96D] uppercase mb-2">Part Two</h3>
+                <h4 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-slate-900'} mb-4`}>SKILL ACQUISITION</h4>
+                <p className={`text-lg font-medium ${isDark ? 'text-slate-200' : 'text-slate-800'} mb-4`}>"Seven skills. Your choice. Three selected."</p>
+                <p className={`${isDark ? 'text-slate-400' : 'text-slate-600'} text-sm leading-relaxed mb-6`}>
+                  Explore seven high-value skills across digital media, technology, and physical trades. Select your primary choice during registration. The top 3 voted skills will be hosted live with expert tutors!
+                </p>
+              </div>
+
+              <div className={`pt-6 border-t ${isDark ? 'border-slate-800/80 text-slate-400' : 'border-slate-100 text-slate-500'} flex items-center justify-between text-xs font-medium`}>
+                <span>Hands-On Masterclasses</span>
+                <span className="text-[#E0A96D]">Top 3 Voted Taught Live</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <section id="speakers" className="py-24 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-xs font-bold uppercase tracking-widest text-[#00B4D8] mb-3">The Speakers</h2>
+            <p className={`text-3xl sm:text-4xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>Three journeys. Three perspectives.</p>
+            <p className={`mt-4 ${isDark ? 'text-slate-300' : 'text-slate-600'} text-base`}>
+              Our contributors will share practical lessons from their respective fields and business experiences.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3].map((num) => (
+              <div 
+                key={num}
+                className={`group relative ${isDark ? 'bg-[#1B263B]/60 border-slate-700/60' : 'bg-white border-slate-200 shadow-xl'} rounded-3xl p-6 border hover:border-[#00B4D8]/60 transition-all duration-300 overflow-hidden flex flex-col items-center text-center`}
+              >
+                <div className={`absolute top-4 right-4 px-3 py-1 rounded-full ${isDark ? 'bg-slate-900/80 border-slate-700 text-slate-400' : 'bg-slate-100 border-slate-200 text-slate-600'} text-xs font-semibold`}>
+                  Coming Soon
+                </div>
+
+                <div className={`w-32 h-32 rounded-2xl ${isDark ? 'bg-gradient-to-br from-slate-800 to-slate-900 border-slate-600' : 'bg-gradient-to-br from-slate-100 to-slate-200 border-slate-300'} border-2 border-dashed flex flex-col items-center justify-center my-6 group-hover:scale-105 transition-transform relative overflow-hidden`}>
+                  <Users className="w-12 h-12 text-slate-400 mb-1"/>
+                  <span className="text-[10px] text-slate-400 font-mono uppercase tracking-wider">Photo Pending</span>
+                  
+                  <div className="absolute inset-0 -translate-x-full group-hover:animate-shimmer bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                </div>
+
+                <h3 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-slate-900'} mb-1`}>CONTRIBUTOR 0{num}</h3>
+                <p className="text-xs font-medium text-[#00B4D8] uppercase tracking-wider mb-4">
+                  {num === 1 ? 'E-Commerce & Digital Products' : num === 2 ? 'Tech Freelancing & Web' : 'Creative Economy & Media'}
+                </p>
+
+                <div className={`w-full pt-4 border-t ${isDark ? 'border-slate-800/80 text-slate-400' : 'border-slate-100 text-slate-500'} text-xs leading-relaxed min-h-[70px] flex items-center justify-center`}>
+                  <span>Speaker details and profile photograph will be revealed once officially confirmed.</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 text-center">
+            <span className={`inline-flex items-center gap-2 text-xs ${isDark ? 'text-slate-400 bg-slate-900/40 border-slate-800' : 'text-slate-600 bg-slate-100 border-slate-200'} px-4 py-2 rounded-full border italic`}>
+              <HelpCircle className="w-4 h-4 text-[#00B4D8]"/>
+              Are you a Tedderite running a business? Reach out to the executive committee to share your story!
+            </span>
+          </div>
+
+        </div>
+      </section>
+
+      <section id="skills" className={`py-24 ${isDark ? 'bg-[#1B263B]/30 border-slate-800/80' : 'bg-slate-100 border-slate-200'} border-t border-b relative`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
+            <div>
+              <h2 className="text-xs font-bold uppercase tracking-widest text-[#00B4D8] mb-3">Skill Acquisition Directory</h2>
+              <p className={`text-3xl sm:text-4xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>Seven skills. Which one is yours?</p>
+              <p className={`mt-3 ${isDark ? 'text-slate-300' : 'text-slate-600'} text-base max-w-2xl`}>
+                Explore the options and select ONE skill you would love to learn. Your selection directly determines which top three skills make it into the final live masterclass schedule!
+              </p>
+            </div>
+            
+            <div className="mt-6 md:mt-0 flex flex-wrap gap-2">
+              <button 
+                onClick={() => setActiveTab('all')}
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === 'all' ? 'bg-[#00B4D8] text-slate-950' : `${isDark ? 'bg-slate-800 text-slate-300 hover:bg-slate-700' : 'bg-white text-slate-700 hover:bg-slate-200 shadow-sm'}`}`}
+              >
+                All Skills (7)
+              </button>
+              <button 
+                onClick={() => setActiveTab('digital')}
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === 'digital' ? 'bg-[#00B4D8] text-slate-950' : `${isDark ? 'bg-slate-800 text-slate-300 hover:bg-slate-700' : 'bg-white text-slate-700 hover:bg-slate-200 shadow-sm'}`}`}
+              >
+                Digital & Media
+              </button>
+              <button 
+                onClick={() => setActiveTab('trade')}
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === 'trade' ? 'bg-[#00B4D8] text-slate-950' : `${isDark ? 'bg-slate-800 text-slate-300 hover:bg-slate-700' : 'bg-white text-slate-700 hover:bg-slate-200 shadow-sm'}`}`}
+              >
+                Hands-On Trades
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {skillsData
+              .filter(skill => activeTab === 'all' || skill.category === activeTab)
+              .map((skill) => {
+                const isSelected = selectedSkill === skill.title;
+                const IconComponent = skill.icon;
+                
+                return (
+                  <div 
+                    key={skill.id}
+                    className={`group relative rounded-3xl ${isDark ? 'bg-[#0D1B2A] border-slate-700/60' : 'bg-white border-slate-200 shadow-xl'} border transition-all duration-300 flex flex-col justify-between overflow-hidden ${
+                      isSelected 
+                        ? 'border-[#00B4D8] ring-2 ring-[#00B4D8]/30 scale-[1.02]' 
+                        : 'hover:border-slate-400'
+                    }`}
+                  >
+                    <div className={`relative h-48 ${isDark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'} border-b overflow-hidden flex items-center justify-center group-hover:opacity-95 transition-opacity`}>
+                      <div className={`absolute inset-0 bg-gradient-to-br ${skill.gradient} opacity-20`} />
+                      
+                      <div className={`z-10 p-4 rounded-2xl ${isDark ? 'bg-slate-950/85 border-slate-700 text-white' : 'bg-white border-slate-200 text-slate-800 shadow-md'} border group-hover:scale-110 transition-transform`}>
+                        <IconComponent className="w-10 h-10 text-[#00B4D8]"/>
+                      </div>
+
+                      <div className={`absolute bottom-2 right-3 px-2 py-1 rounded ${isDark ? 'bg-slate-950/70 border-slate-800 text-slate-400' : 'bg-white/80 border-slate-200 text-slate-600'} border text-[10px] font-mono`}>
+                        Visual Placeholder
+                      </div>
+
+                      {isSelected && (
+                        <div className="absolute top-3 left-3 bg-[#00B4D8] text-slate-950 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5 shadow-lg">
+                          <Check className="w-3.5 h-3.5"/>
+                          <span>Selected Choice</span>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="p-6 flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <span className={`text-xs font-bold ${isDark ? 'text-slate-400' : 'text-slate-500'} font-mono`}>{skill.code}</span>
+                          <span className="text-[11px] font-semibold text-[#00B4D8] bg-cyan-950/40 px-2.5 py-0.5 rounded-full border border-cyan-800/40">
+                            {skill.categoryTag}
+                          </span>
+                        </div>
+
+                        <h3 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-slate-900'} mb-2`}>{skill.title}</h3>
+                        <p className={`${isDark ? 'text-slate-300' : 'text-slate-600'} text-sm leading-relaxed mb-6`}>{skill.description}</p>
+                      </div>
+
+                      <div>
+                        <div className={`mb-6 p-3 rounded-xl ${isDark ? 'bg-slate-900/80 border-slate-800 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-700'} border text-xs flex items-start gap-2.5`}>
+                          <Award className="w-4 h-4 text-[#E0A96D] shrink-0 mt-0.5"/>
+                          <div>
+                            <span className={`font-semibold ${isDark ? 'text-slate-200' : 'text-slate-900'} block mb-0.5`}>Requirement:</span>
+                            <span className={`${isDark ? 'text-slate-400' : 'text-slate-600'}`}>{skill.requirement}</span>
+                          </div>
+                        </div>
+
+                        <button
+                          onClick={() => handleSkillSelect(skill.title)}
+                          className={`w-full py-3 px-4 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 ${
+                            isSelected
+                              ? 'bg-[#00B4D8] text-slate-950 shadow-lg shadow-cyan-500/30'
+                              : `${isDark ? 'bg-slate-800 hover:bg-slate-700 text-white border-slate-700' : 'bg-white hover:bg-slate-100 text-slate-800 border-slate-300 shadow-sm'} border`
+                          }`}
+                        >
+                          {isSelected ? (
+                            <>
+                              <CheckCircle2 className="w-4 h-4"/>
+                              <span>Selected Choice</span>
+                            </>
+                          ) : (
+                            <>
+                              <span>Select This Skill</span>
+                              <ArrowRight className="w-4 h-4"/>
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
+
+        </div>
+      </section>
+
+      <section id="process" className="py-24 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="text-center max-w-3xl mx-auto mb-20">
+            <h2 className="text-xs font-bold uppercase tracking-widest text-[#00B4D8] mb-3">The Roadmap</h2>
+            <p className={`text-3xl sm:text-4xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>Your choice shapes the programme.</p>
+            <p className={`mt-3 ${isDark ? 'text-slate-300' : 'text-slate-600'} text-base`}>
+              Here is how your vote transforms the summit schedule in 4 simple steps.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+            <div className={`${isDark ? 'bg-[#1B263B]/50 border-slate-700/60' : 'bg-white border-slate-200 shadow-xl'} rounded-2xl p-6 border relative z-10 flex flex-col justify-between`}>
+              <div>
+                <div className="w-12 h-12 rounded-xl bg-cyan-950 text-[#00B4D8] border border-cyan-800/50 flex items-center justify-center font-black text-lg mb-6">
+                  01
+                </div>
+                <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-slate-900'} mb-2`}>Explore Skills</h3>
+                <p className={`${isDark ? 'text-slate-300' : 'text-slate-600'} text-sm leading-relaxed`}>
+                  Review the 7 available skill tracks listed above and find your ideal starting point.
+                </p>
+              </div>
+              <div className={`mt-6 pt-4 border-t ${isDark ? 'border-slate-800 text-slate-400' : 'border-slate-100 text-slate-500'} text-xs font-medium`}>
+                Step 1 of 4
+              </div>
+            </div>
+
+            <div className={`${isDark ? 'bg-[#1B263B]/50 border-slate-700/60' : 'bg-white border-slate-200 shadow-xl'} rounded-2xl p-6 border relative z-10 flex flex-col justify-between`}>
+              <div>
+                <div className="w-12 h-12 rounded-xl bg-cyan-950 text-[#00B4D8] border border-cyan-800/50 flex items-center justify-center font-black text-lg mb-6">
+                  02
+                </div>
+                <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-slate-900'} mb-2`}>Choose ONE</h3>
+                <p className={`${isDark ? 'text-slate-300' : 'text-slate-600'} text-sm leading-relaxed`}>
+                  Select your preferred skill track in the registration form below before the deadline.
+                </p>
+              </div>
+              <div className={`mt-6 pt-4 border-t ${isDark ? 'border-slate-800 text-slate-400' : 'border-slate-100 text-slate-500'} text-xs font-medium`}>
+                Step 2 of 4
+              </div>
+            </div>
+
+            <div className={`${isDark ? 'bg-[#1B263B]/50 border-slate-700/60' : 'bg-white border-slate-200 shadow-xl'} rounded-2xl p-6 border relative z-10 flex flex-col justify-between`}>
+              <div>
+                <div className="w-12 h-12 rounded-xl bg-cyan-950 text-[#00B4D8] border border-cyan-800/50 flex items-center justify-center font-black text-lg mb-6">
+                  03
+                </div>
+                <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-slate-900'} mb-2`}>Top 3 Make Cut</h3>
+                <p className={`${isDark ? 'text-slate-300' : 'text-slate-600'} text-sm leading-relaxed`}>
+                  Votes will be tallied, and the top 3 most requested skills will be chosen for live masterclasses.
+                </p>
+              </div>
+              <div className={`mt-6 pt-4 border-t ${isDark ? 'border-slate-800 text-slate-400' : 'border-slate-100 text-slate-500'} text-xs font-medium`}>
+                Step 3 of 4
+              </div>
+            </div>
+
+            <div className={`${isDark ? 'bg-[#1B263B]/50 border-slate-700/60' : 'bg-white border-slate-200 shadow-xl'} rounded-2xl p-6 border relative z-10 flex flex-col justify-between`}>
+              <div>
+                <div className="w-12 h-12 rounded-xl bg-[#E0A96D]/20 text-[#E0A96D] border border-[#E0A96D]/40 flex items-center justify-center font-black text-lg mb-6">
+                  04
+                </div>
+                <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-slate-900'} mb-2`}>Meet Your Tutors</h3>
+                <p className={`${isDark ? 'text-slate-300' : 'text-slate-600'} text-sm leading-relaxed`}>
+                  Expert tutors and workshop physical structures will be officially revealed live at the summit.
+                </p>
+              </div>
+              <div className="mt-6 pt-4 border-t border-slate-800 text-xs font-medium text-[#E0A96D]">
+                Final Masterclass Reveal
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <section id="register" className={`py-24 ${isDark ? 'bg-[#1B263B]/40 border-slate-800/80' : 'bg-slate-100 border-slate-200'} border-t border-b relative`}>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className={`${isDark ? 'bg-[#0D1B2A] border-slate-700' : 'bg-white border-slate-200 shadow-2xl'} rounded-3xl p-6 sm:p-10 border relative overflow-hidden`}>
+            
+            <div className="text-center max-w-2xl mx-auto mb-10">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950 text-[#00B4D8] text-xs font-bold uppercase mb-3">
+                <Sparkles className="w-3.5 h-3.5"/>
+                <span>Official Registration</span>
+              </div>
+              <h2 className={`text-3xl sm:text-4xl font-black ${isDark ? 'text-white' : 'text-slate-900'} mb-3`}>Secure Your Summit Seat</h2>
+              <p className={`${isDark ? 'text-slate-300' : 'text-slate-600'} text-sm sm:text-base`}>
+                Make your choice, cast your vote, and join fellow Tedderites in unlocking high-value skillsets.
+              </p>
+            </div>
+
+            {submitted ? (
+              <div className={`${isDark ? 'bg-slate-900/90 border-cyan-500/50' : 'bg-slate-50 border-cyan-300'} border rounded-2xl p-8 text-center animate-fadeIn`}>
+                <div className="w-16 h-16 rounded-full bg-[#00B4D8]/20 text-[#00B4D8] flex items-center justify-center mx-auto mb-4 border border-[#00B4D8]/40">
+                  <CheckCircle2 className="w-10 h-10"/>
+                </div>
+                <h3 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-slate-900'} mb-2`}>You're All Set!</h3>
+                <p className={`${isDark ? 'text-slate-300' : 'text-slate-600'} text-sm mb-6 max-w-md mx-auto`}>
+                  Thank you, <span className="text-[#00B4D8] font-bold">{formData.fullName}</span>! Your vote for <span className="text-[#90E0EF] font-bold">"{formData.skill}"</span> has been recorded successfully.
+                </p>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                  <button
+                    onClick={() => setSubmitted(false)}
+                    className={`w-full sm:w-auto px-6 py-2.5 rounded-xl ${isDark ? 'bg-slate-800 text-slate-300 hover:text-white border-slate-700' : 'bg-white text-slate-700 hover:bg-slate-100 border-slate-300 shadow-sm'} text-sm font-semibold border`}
+                  >
+                    Edit Registration
+                  </button>
+                  <a
+                    href={GOOGLE_FORM_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#00B4D8] text-slate-950 text-sm font-bold flex items-center justify-center gap-2"
+                  >
+                    <span>Open External Google Form</span>
+                    <ExternalLink className="w-4 h-4"/>
+                  </a>
+                </div>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-6">
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div>
+                    <label className={`block text-xs font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'} uppercase tracking-wider mb-2`}>
+                      Full Name <span className="text-[#00B4D8]">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="fullName"
+                      required
+                      placeholder="e.g. Victor Adedipe"
+                      value={formData.fullName}
+                      onChange={handleInputChange}
+                      className={`w-full ${isDark ? 'bg-slate-900 border-slate-700 text-slate-100 placeholder-slate-500' : 'bg-white border-slate-300 text-slate-900 placeholder-slate-400'} border rounded-xl px-4 py-3 focus:outline-none focus:border-[#00B4D8] focus:ring-1 focus:ring-[#00B4D8] transition-all text-sm`}
+                    />
+                  </div>
+
+                  <div>
+                    <label className={`block text-xs font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'} uppercase tracking-wider mb-2`}>
+                      Email Address <span className="text-[#00B4D8]">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      placeholder="e.g. student@ui.edu.ng"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className={`w-full ${isDark ? 'bg-slate-900 border-slate-700 text-slate-100 placeholder-slate-500' : 'bg-white border-slate-300 text-slate-900 placeholder-slate-400'} border rounded-xl px-4 py-3 focus:outline-none focus:border-[#00B4D8] focus:ring-1 focus:ring-[#00B4D8] transition-all text-sm`}
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div>
+                    <label className={`block text-xs font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'} uppercase tracking-wider mb-2`}>
+                      Matriculation / Student ID
+                    </label>
+                    <input
+                      type="text"
+                      name="studentId"
+                      placeholder="e.g. 219084"
+                      value={formData.studentId}
+                      onChange={handleInputChange}
+                      className={`w-full ${isDark ? 'bg-slate-900 border-slate-700 text-slate-100 placeholder-slate-500' : 'bg-white border-slate-300 text-slate-900 placeholder-slate-400'} border rounded-xl px-4 py-3 focus:outline-none focus:border-[#00B4D8] focus:ring-1 focus:ring-[#00B4D8] transition-all text-sm`}
+                    />
+                  </div>
+
+                  <div>
+                    <label className={`block text-xs font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'} uppercase tracking-wider mb-2`}>
+                      Department / Level
+                    </label>
+                    <input
+                      type="text"
+                      name="department"
+                      placeholder="e.g. Computer Science, 300L"
+                      value={formData.department}
+                      onChange={handleInputChange}
+                      className={`w-full ${isDark ? 'bg-slate-900 border-slate-700 text-slate-100 placeholder-slate-500' : 'bg-white border-slate-300 text-slate-900 placeholder-slate-400'} border rounded-xl px-4 py-3 focus:outline-none focus:border-[#00B4D8] focus:ring-1 focus:ring-[#00B4D8] transition-all text-sm`}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className={`block text-xs font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'} uppercase tracking-wider mb-2`}>
+                    Select Preferred Skill <span className="text-[#00B4D8]">*</span>
+                  </label>
+                  <div className="relative">
+                    <select
+                      name="skill"
+                      required
+                      value={formData.skill}
+                      onChange={(e) => {
+                        handleInputChange(e);
+                        setSelectedSkill(e.target.value);
+                      }}
+                      className={`w-full ${isDark ? 'bg-slate-900 border-slate-700 text-slate-100' : 'bg-white border-slate-300 text-slate-900'} border rounded-xl px-4 py-3 focus:outline-none focus:border-[#00B4D8] focus:ring-1 focus:ring-[#00B4D8] transition-all text-sm appearance-none cursor-pointer`}
+                    >
+                      <option value="" disabled>-- Select one of the 7 available skills --</option>
+                      {skillsData.map((s) => (
+                        <option key={s.id} value={s.title}>
+                          {s.title} ({s.categoryTag})
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown className="w-5 h-5 text-slate-400 absolute right-3 top-3.5 pointer-events-none"/>
+                  </div>
+                  <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'} mt-1.5`}>
+                    Tip: You can also select skills directly from the Skills Directory above to pre-populate this field!
+                  </p>
+                </div>
+
+                <div className="pt-4 flex flex-col sm:flex-row items-center gap-4">
+                  <button
+                    type="submit"
+                    className="w-full sm:flex-1 py-4 px-6 rounded-xl bg-gradient-to-r from-[#00B4D8] via-[#90E0EF] to-[#00B4D8] text-slate-950 font-extrabold text-base transition-all duration-300 shadow-xl shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:-translate-y-0.5"
+                  >
+                    Complete Registration
+                  </button>
+
+                  <a
+                    href={GOOGLE_FORM_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`w-full sm:w-auto py-4 px-6 rounded-xl ${isDark ? 'bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700' : 'bg-white hover:bg-slate-100 text-slate-800 border-slate-300 shadow-sm'} font-bold text-sm border flex items-center justify-center gap-2 transition-colors`}
+                  >
+                    <span>Or fill on Google Forms</span>
+                    <ExternalLink className="w-4 h-4 text-[#00B4D8]"/>
+                  </a>
+                </div>
+
+              </form>
+            )}
+
+          </div>
+
+        </div>
+      </section>
+
+      <footer className={`${isDark ? 'bg-[#09121D] border-slate-800 text-slate-400' : 'bg-slate-900 border-slate-800 text-slate-400'} border-t pt-16 pb-12 text-sm`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-12 border-b border-slate-800">
+            <div className="md:col-span-6 space-y-4">
+              <div className="flex items-center gap-2 font-black text-xl text-white">
+                <div className="w-8 h-8 rounded-lg bg-[#00B4D8] text-slate-950 flex items-center justify-center text-xs">
+                  LTH
+                </div>
+                <span>WHAT WILL YOU LEARN?</span>
+              </div>
+              <p className="text-slate-300 text-base font-normal max-w-md">
+                Seven skills are available. One choice is yours. Make your selection, register your vote, and take charge of your personal financial independence.
+              </p>
+              <div className="flex items-center gap-4 text-xs font-semibold text-[#00B4D8]">
+                <span>#TedderFinance2026</span>
+                <span>•</span>
+                <span>#LearnEarnGrow</span>
+              </div>
+            </div>
+
+            <div className="md:col-span-3 space-y-3">
+              <h4 className="text-xs font-bold text-white uppercase tracking-wider">Navigation</h4>
+              <ul className="space-y-2 text-xs">
+                <li><button onClick={() => scrollToSection('about')} className="hover:text-[#00B4D8]">About Summit</button></li>
+                <li><button onClick={() => scrollToSection('speakers')} className="hover:text-[#00B4D8]">Contributors</button></li>
+                <li><button onClick={() => scrollToSection('skills')} className="hover:text-[#00B4D8]">Skills Directory</button></li>
+                <li><button onClick={() => scrollToSection('process')} className="hover:text-[#00B4D8]">How Selection Works</button></li>
+                <li><button onClick={() => scrollToSection('register')} className="hover:text-[#00B4D8]">Register Form</button></li>
+              </ul>
+            </div>
+
+            <div className="md:col-span-3 space-y-3">
+              <h4 className="text-xs font-bold text-white uppercase tracking-wider">Venue & Host</h4>
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Lord Tedder Hall Executive Council <br />
+                University of Ibadan, Ibadan, Nigeria.
+              </p>
+              <div className="pt-2 flex items-center gap-3">
+                <a 
+                  href={GOOGLE_FORM_URL} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="p-2 rounded-lg bg-slate-800 text-slate-300 hover:text-[#00B4D8] transition-colors"
+                >
+                  <ExternalLink className="w-4 h-4"/>
+                </a>
+                <button 
+                  onClick={handleShare}
+                  className="p-2 rounded-lg bg-slate-800 text-slate-300 hover:text-[#00B4D8] transition-colors"
+                  title="Copy Page Link"
+                >
+                  <Share2 className="w-4 h-4"/>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+            <p>© 2026 Lord Tedder Hall Finance Summit Committee. All rights reserved.</p>
+            <p className="flex items-center gap-1">
+              Crafted for Tedderites • <span className="text-slate-400">UI Ibadan</span>
+            </p>
+          </div>
+
+        </div>
+      </footer>
+
+    </div>
+  );
+}
+
+function ParticleCanvas() {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let animationFrameId;
+
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    const handleResize = () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    const particleCount = width < 768 ? 15 : Math.min(Math.floor(width / 25), 45);
+    const particles = Array.from({ length: particleCount }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4,
+      radius: Math.random() * 2 + 1,
+      color: Math.random() > 0.5 ? 'rgba(0, 180, 216, 0.25)' : 'rgba(144, 224, 239, 0.15)'
+    }));
+
+    const render = () => {
+      if (document.hidden) {
+        animationFrameId = requestAnimationFrame(render);
+        return;
+      }
+
+      ctx.clearRect(0, 0, width, height);
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0) p.x = width;
+        if (p.x > width) p.x = 0;
+        if (p.y < 0) p.y = height;
+        if (p.y > height) p.y = 0;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const dx = p.x - p2.x;
+          const dy = p.y - p2.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 120) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(0, 180, 216, ${0.08 * (1 - dist / 120)})`;
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
+        }
+      }
+
+      animationFrameId = requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
+
+  return (
+    <canvas 
+      ref={canvasRef} 
+      className="fixed inset-0 pointer-events-none z-0 opacity-80"
+    />
+  );
+}
+
+const skillsData = [
+  {
+    id: 'skill-01',
+    code: 'SKILL 01',
+    title: 'Content Creation',
+    category: 'digital',
+    categoryTag: 'Digital Media',
+    icon: Sparkles,
+    gradient: 'from-blue-600 to-cyan-400',
+    description: 'Master finding a profitable niche, creating engaging social content, accelerating organic audience growth, and securing brand partnerships.',
+    requirement: 'Smartphone or laptop & willingness to build a creative brand.'
+  },
+  {
+    id: 'skill-02',
+    code: 'SKILL 02',
+    title: 'Photography & Photo Editing',
+    category: 'digital',
+    categoryTag: 'Digital Media',
+    icon: Camera,
+    gradient: 'from-amber-500 to-yellow-300',
+    description: 'Learn smartphone camera composition, lighting techniques, mobile color grading, and commercial photo retouching.',
+    requirement: 'Smartphone with a working camera or personal DSLR.'
+  },
+  {
+    id: 'skill-03',
+    code: 'SKILL 03',
+    title: 'Videography & Video Editing',
+    category: 'digital',
+    categoryTag: 'Digital Media',
+    icon: Video,
+    gradient: 'from-cyan-600 to-blue-400',
+    description: 'Learn storyboarding, footage capture, audio mixing, CapCut/Premiere workflow, and high-converting video edits.',
+    requirement: 'Smartphone or access to any basic recording device.'
+  },
+  {
+    id: 'skill-04',
+    code: 'SKILL 04',
+    title: 'Graphic Design',
+    category: 'digital',
+    categoryTag: 'Design',
+    icon: Palette,
+    gradient: 'from-emerald-500 to-teal-300',
+    description: 'Principles of visual communication, layout hierarchy, typography, color theory, and creating brand collateral in Canva/Photoshop.',
+    requirement: 'Smartphone or laptop with internet access.'
+  },
+  {
+    id: 'skill-05',
+    code: 'SKILL 05',
+    title: 'Web Design & Development',
+    category: 'digital',
+    categoryTag: 'Tech',
+    icon: Code,
+    gradient: 'from-indigo-600 to-cyan-500',
+    description: 'Build modern landing pages and websites using AI-powered site builders and no-code tools — no traditional coding background needed.',
+    requirement: 'Smartphone/Laptop and reliable internet connection.'
+  },
+  {
+    id: 'skill-06',
+    code: 'SKILL 06',
+    title: 'Barbering Fundamentals',
+    category: 'trade',
+    categoryTag: 'Hands-On Trade',
+    icon: Scissors,
+    gradient: 'from-orange-600 to-amber-400',
+    description: 'Barbering fundamentals, clipper blade techniques, fading, line-ups, hygiene standards, and strategies to build a customer base on campus.',
+    requirement: 'No prior experience or personal clipper required.'
+  },
+  {
+    id: 'skill-07',
+    code: 'SKILL 07',
+    title: 'Hairdressing & Styling',
+    category: 'trade',
+    categoryTag: 'Hands-On Trade',
+    icon: Layers,
+    gradient: 'from-purple-600 to-pink-400',
+    description: 'Hair styling fundamentals, trending hair techniques, client consultation, maintenance, and starting a mobile campus salon.',
+    requirement: 'Training materials provided on site; no prior skills needed.'
+  }
+];
+
+ReactDOM.render(<App/>, document.getElementById('root'));
+</script>
+</body>
+</html>
