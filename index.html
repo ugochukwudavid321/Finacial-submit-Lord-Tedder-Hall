@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lord Tedder Hall Finance Summit 2026</title>
+<link rel="icon" type="image/png" href="logo.png">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
 tailwind.config = {
@@ -34,6 +35,7 @@ tailwind.config = {
 <script type="text/babel">
 const { useState, useEffect, useRef } = React;
 
+const IMPULSE_URL = "PASTE LINK HERE";
 const GOOGLE_FORM_URL = "https://forms.gle/dfs15DomLse424XD6";
 const GOOGLE_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSdNzp8yhe5qjBLyYrZE7N5NVpI954-CWPAhX731pr5nktTnNw/formResponse";
 
@@ -340,6 +342,8 @@ function App() {
   const [toastMessage, setToastMessage] = useState('');
   const [isDark, setIsDark] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [headerLogoError, setHeaderLogoError] = useState(false);
+  const [footerLogoError, setFooterLogoError] = useState(false);
 
   const handleSkillSelect = (skillTitle) => {
     setSelectedSkill(skillTitle);
@@ -389,9 +393,20 @@ function App() {
               onClick={() => scrollToSection('hero')} 
               className="cursor-pointer flex items-center gap-3 group"
             >
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#00B4D8] to-[#90E0EF] flex items-center justify-center font-black text-slate-950 shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform">
-                LTH
-              </div>
+              {!headerLogoError ? (
+                <div className="w-[44px] h-[44px] rounded-full overflow-hidden border border-[#00B4D8] flex items-center justify-center bg-slate-900 group-hover:scale-105 transition-transform shrink-0">
+                  <img 
+                    src="logo.png" 
+                    alt="Tedder Hall, University of Ibadan logo" 
+                    className="w-full h-full object-cover"
+                    onError={() => setHeaderLogoError(true)}
+                  />
+                </div>
+              ) : (
+                <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-[#00B4D8] to-[#90E0EF] flex items-center justify-center font-black text-slate-950 shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform shrink-0">
+                  LTH
+                </div>
+              )}
               <div>
                 <span className={`font-extrabold text-lg tracking-tight block ${isDark ? 'text-white' : 'text-slate-900'} leading-none`}>
                   LORD TEDDER HALL
@@ -902,9 +917,20 @@ function App() {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-12 border-b border-slate-800">
             <div className="md:col-span-6 space-y-4">
               <div className="flex items-center gap-2 font-black text-xl text-white">
-                <div className="w-8 h-8 rounded-lg bg-[#00B4D8] text-slate-950 flex items-center justify-center text-xs">
-                  LTH
-                </div>
+                {!footerLogoError ? (
+                  <div className="w-8 h-8 rounded-full overflow-hidden border border-[#00B4D8] flex items-center justify-center bg-slate-900 shrink-0">
+                    <img 
+                      src="logo.png" 
+                      alt="Tedder Hall, University of Ibadan logo" 
+                      className="w-full h-full object-cover"
+                      onError={() => setFooterLogoError(true)}
+                    />
+                  </div>
+                ) : (
+                  <div className="w-8 h-8 rounded-lg bg-[#00B4D8] text-slate-950 flex items-center justify-center text-xs shrink-0">
+                    LTH
+                  </div>
+                )}
                 <span>WHAT WILL YOU LEARN?</span>
               </div>
               <p className="text-slate-300 text-base font-normal max-w-md">
@@ -955,10 +981,16 @@ function App() {
 
           </div>
 
-          <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+          <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 text-center sm:text-left">
             <p>© 2026 Lord Tedder Hall Finance Summit Committee. All rights reserved.</p>
-            <p className="flex items-center gap-1">
+            <p className="flex items-center justify-center gap-1">
               Crafted for Tedderites • <span className="text-slate-400">UI Ibadan</span>
+            </p>
+            <p className="flex items-center justify-center min-h-[44px]">
+              <a href={IMPULSE_URL} target="_blank" rel="noopener noreferrer" className="text-[#00B4D8] font-bold hover:underline min-h-[44px] flex items-center px-1">
+                IMPULSE
+              </a>
+              <span className="ml-1">built this</span>
             </p>
           </div>
 
@@ -986,6 +1018,8 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
   const [submitError, setSubmitError] = useState('');
   const [successData, setSuccessData] = useState(null);
   const [errors, setErrors] = useState({});
+  const [hallOpen, setHallOpen] = useState(false);
+  const hallRef = useRef(null);
 
   const [formData, setFormData] = useState({
     email: '',
@@ -1023,8 +1057,24 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
   }, []);
 
   useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (hallRef.current && !hallRef.current.contains(e.target)) {
+        setHallOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') {
+        if (hallOpen) {
+          setHallOpen(false);
+        } else {
+          onClose();
+        }
+      }
     };
     window.addEventListener('keydown', handleKeyDown);
     document.body.style.overflow = 'hidden';
@@ -1032,7 +1082,7 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
       window.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'auto';
     };
-  }, [onClose]);
+  }, [onClose, hallOpen]);
 
   const validatePage1 = () => {
     const newErrors = {};
@@ -1187,7 +1237,9 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
     }
   };
 
-  const progressPercent = (page / 3) * 100;
+  const completedCount = alreadyRegistered ? 3 : (page - 1);
+  const progressPercent = (completedCount / 3) * 100;
+  const progressText = Math.round(progressPercent) + '%';
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fadeIn">
@@ -1236,13 +1288,13 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
           </div>
         ) : (
           <div>
-            <div className="mb-8">
+            <div className="mb-8 pr-16">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-bold text-[#00B4D8] uppercase tracking-wider">
                   Page {page} of 3
                 </span>
                 <span className={`text-xs font-mono ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                  {Math.round(progressPercent)}% Complete
+                  {progressText}
                 </span>
               </div>
               <div className={`w-full h-2 rounded-full ${isDark ? 'bg-slate-800' : 'bg-slate-200'} overflow-hidden`}>
@@ -1278,7 +1330,7 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
                         onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
                         className={`w-full ${isDark ? 'bg-slate-900 border-slate-700 text-slate-100 placeholder-slate-500' : 'bg-white border-slate-300 text-slate-900 placeholder-slate-400'} border rounded-xl px-4 py-3 pl-11 focus:outline-none focus:border-[#00B4D8] text-sm`}
                       />
-                      <Mail className="w-5 h-5 text-slate-400 absolute left-3.5 top-3 pointer-events-none"/>
+                      <Mail className="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"/>
                     </div>
                     {errors.email && <p className="text-xs text-red-400 mt-1">{errors.email}</p>}
                   </div>
@@ -1296,7 +1348,7 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
                         onChange={(e) => setFormData(prev => ({ ...prev, fullName: e.target.value }))}
                         className={`w-full ${isDark ? 'bg-slate-900 border-slate-700 text-slate-100 placeholder-slate-500' : 'bg-white border-slate-300 text-slate-900 placeholder-slate-400'} border rounded-xl px-4 py-3 pl-11 focus:outline-none focus:border-[#00B4D8] text-sm`}
                       />
-                      <UserIcon className="w-5 h-5 text-slate-400 absolute left-3.5 top-3 pointer-events-none"/>
+                      <UserIcon className="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"/>
                     </div>
                     {errors.fullName && <p className="text-xs text-red-400 mt-1">{errors.fullName}</p>}
                   </div>
@@ -1314,7 +1366,7 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
                         onChange={(e) => setFormData(prev => ({ ...prev, department: e.target.value }))}
                         className={`w-full ${isDark ? 'bg-slate-900 border-slate-700 text-slate-100 placeholder-slate-500' : 'bg-white border-slate-300 text-slate-900 placeholder-slate-400'} border rounded-xl px-4 py-3 pl-11 focus:outline-none focus:border-[#00B4D8] text-sm`}
                       />
-                      <Briefcase className="w-5 h-5 text-slate-400 absolute left-3.5 top-3 pointer-events-none"/>
+                      <Briefcase className="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"/>
                     </div>
                     {errors.department && <p className="text-xs text-red-400 mt-1">{errors.department}</p>}
                   </div>
@@ -1332,7 +1384,7 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
                         onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
                         className={`w-full ${isDark ? 'bg-slate-900 border-slate-700 text-slate-100 placeholder-slate-500' : 'bg-white border-slate-300 text-slate-900 placeholder-slate-400'} border rounded-xl px-4 py-3 pl-11 focus:outline-none focus:border-[#00B4D8] text-sm`}
                       />
-                      <PhoneIcon className="w-5 h-5 text-slate-400 absolute left-3.5 top-3 pointer-events-none"/>
+                      <PhoneIcon className="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"/>
                     </div>
                     {errors.phone && <p className="text-xs text-red-400 mt-1">{errors.phone}</p>}
                   </div>
@@ -1360,25 +1412,46 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
                     {errors.level && <p className="text-xs text-red-400 mt-1">{errors.level}</p>}
                   </div>
 
-                  <div>
+                  <div className="relative" ref={hallRef}>
                     <label className={`block text-xs font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'} uppercase tracking-wider mb-1.5`}>
                       Hall of Residence <span className="text-[#00B4D8]">*</span>
                     </label>
-                    <div className="relative">
-                      <select
-                        required
-                        value={formData.hall}
-                        onChange={(e) => setFormData(prev => ({ ...prev, hall: e.target.value }))}
-                        className={`w-full ${isDark ? 'bg-slate-900 border-slate-700 text-slate-100' : 'bg-white border-slate-300 text-slate-900'} border rounded-xl px-4 py-3 pl-11 focus:outline-none focus:border-[#00B4D8] text-sm appearance-none cursor-pointer`}
-                      >
-                        <option value="" disabled>-- Select Hall of Residence --</option>
-                        {HALL_OPTIONS.map(h => (
-                          <option key={h} value={h}>{h}</option>
-                        ))}
-                      </select>
-                      <HomeIcon className="w-5 h-5 text-slate-400 absolute left-3.5 top-3 pointer-events-none"/>
-                      <ChevronDown className="w-5 h-5 text-slate-400 absolute right-3.5 top-3 pointer-events-none"/>
-                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setHallOpen(!hallOpen)}
+                      className={`w-full ${isDark ? 'bg-slate-900 text-slate-100' : 'bg-white text-slate-900'} ${hallOpen ? 'border-[#00B4D8]' : (isDark ? 'border-slate-700' : 'border-slate-300')} border rounded-xl px-4 py-3 text-left focus:outline-none text-sm flex items-center gap-3 cursor-pointer`}
+                    >
+                      <HomeIcon className="w-5 h-5 text-slate-400 shrink-0"/>
+                      <span className={`flex-1 truncate ${formData.hall ? '' : (isDark ? 'text-slate-500' : 'text-slate-400')}`}>
+                        {formData.hall || '-- Select Hall of Residence --'}
+                      </span>
+                      <ChevronDown className={`w-5 h-5 text-slate-400 shrink-0 transition-transform duration-300 ${hallOpen ? 'rotate-180' : ''}`} />
+                    </button>
+
+                    {hallOpen && (
+                      <div className={`mt-[8px] w-full rounded-xl ${isDark ? 'bg-[#0D1B2A] border-[#00B4D8] text-slate-100' : 'bg-white border-[#00B4D8] text-slate-900'} border shadow-2xl max-h-[45vh] overflow-y-auto`}>
+                        {HALL_OPTIONS.map(h => {
+                          const isSelected = formData.hall === h;
+                          return (
+                            <div
+                              key={h}
+                              onClick={() => {
+                                setFormData(prev => ({ ...prev, hall: h }));
+                                setHallOpen(false);
+                              }}
+                              className={`min-h-[48px] px-4 py-3 flex items-center justify-between cursor-pointer transition-colors ${
+                                isSelected 
+                                  ? (isDark ? 'bg-slate-800/80 text-[#00B4D8]' : 'bg-cyan-50 text-cyan-900 font-semibold')
+                                  : (isDark ? 'hover:bg-slate-800/50 text-slate-200' : 'hover:bg-slate-100 text-slate-800')
+                              }`}
+                            >
+                              <span className="text-sm text-left">{h}</span>
+                              {isSelected && <Check className="w-5 h-5 text-[#00B4D8] shrink-0 ml-2"/>}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
                     {errors.hall && <p className="text-xs text-red-400 mt-1">{errors.hall}</p>}
                   </div>
 
