@@ -28,17 +28,38 @@ tailwind.config = {
 .animate-fadeIn { animation: fadeIn 0.3s ease-out forwards; }
 .animate-shimmer { animation: shimmer 1.5s infinite; }
 .bg-size-200 { background-size: 200% 200%; animation: bgSize200 4s ease infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .duration-400 { transition-duration: 0ms !important; }
+}
 </style>
 </head>
 <body>
 <div id="root"></div>
 <script type="text/babel">
 const { useState, useEffect, useRef } = React;
-
 const IMPULSE_URL = "PASTE LINK HERE";
 const GOOGLE_FORM_URL = "https://forms.gle/dfs15DomLse424XD6";
 const GOOGLE_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSdNzp8yhe5qjBLyYrZE7N5NVpI954-CWPAhX731pr5nktTnNw/formResponse";
-
+const CONTRIBUTORS = [
+  {
+    tag: "CONTRIBUTOR 01",
+    role: "E-Commerce & Digital Products",
+    description: "Speaker details and profile photograph will be revealed once officially confirmed.",
+    photo: "contributor1.jpg"
+  },
+  {
+    tag: "CONTRIBUTOR 02",
+    role: "Tech Freelancing & Web",
+    description: "Speaker details and profile photograph will be revealed once officially confirmed.",
+    photo: "contributor2.jpg"
+  },
+  {
+    tag: "CONTRIBUTOR 03",
+    role: "Creative Economy & Media",
+    description: "Speaker details and profile photograph will be revealed once officially confirmed.",
+    photo: "contributor3.jpg"
+  }
+];
 function Sparkles({ className = "w-5 h-5" }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -46,7 +67,6 @@ function Sparkles({ className = "w-5 h-5" }) {
     </svg>
   );
 }
-
 function BookOpen({ className = "w-5 h-5" }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -54,7 +74,6 @@ function BookOpen({ className = "w-5 h-5" }) {
     </svg>
   );
 }
-
 function TrendingUp({ className = "w-5 h-5" }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -62,7 +81,6 @@ function TrendingUp({ className = "w-5 h-5" }) {
     </svg>
   );
 }
-
 function Users({ className = "w-5 h-5" }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -70,7 +88,6 @@ function Users({ className = "w-5 h-5" }) {
     </svg>
   );
 }
-
 function CheckCircle2({ className = "w-5 h-5" }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -78,7 +95,6 @@ function CheckCircle2({ className = "w-5 h-5" }) {
     </svg>
   );
 }
-
 function ArrowRight({ className = "w-5 h-5" }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -86,7 +102,6 @@ function ArrowRight({ className = "w-5 h-5" }) {
     </svg>
   );
 }
-
 function ChevronDown({ className = "w-5 h-5" }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -94,7 +109,6 @@ function ChevronDown({ className = "w-5 h-5" }) {
     </svg>
   );
 }
-
 function Menu({ className = "w-5 h-5" }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -102,7 +116,6 @@ function Menu({ className = "w-5 h-5" }) {
     </svg>
   );
 }
-
 function X({ className = "w-5 h-5" }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -110,7 +123,6 @@ function X({ className = "w-5 h-5" }) {
     </svg>
   );
 }
-
 function Camera({ className = "w-5 h-5" }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -119,7 +131,6 @@ function Camera({ className = "w-5 h-5" }) {
     </svg>
   );
 }
-
 function Video({ className = "w-5 h-5" }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -127,7 +138,6 @@ function Video({ className = "w-5 h-5" }) {
     </svg>
   );
 }
-
 function Palette({ className = "w-5 h-5" }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -135,7 +145,6 @@ function Palette({ className = "w-5 h-5" }) {
     </svg>
   );
 }
-
 function Code({ className = "w-5 h-5" }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -143,7 +152,6 @@ function Code({ className = "w-5 h-5" }) {
     </svg>
   );
 }
-
 function Scissors({ className = "w-5 h-5" }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -151,7 +159,6 @@ function Scissors({ className = "w-5 h-5" }) {
     </svg>
   );
 }
-
 function Layers({ className = "w-5 h-5" }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -159,7 +166,6 @@ function Layers({ className = "w-5 h-5" }) {
     </svg>
   );
 }
-
 function Award({ className = "w-5 h-5" }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -168,7 +174,6 @@ function Award({ className = "w-5 h-5" }) {
     </svg>
   );
 }
-
 function ExternalLink({ className = "w-5 h-5" }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -176,7 +181,6 @@ function ExternalLink({ className = "w-5 h-5" }) {
     </svg>
   );
 }
-
 function MapPin({ className = "w-5 h-5" }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -185,7 +189,6 @@ function MapPin({ className = "w-5 h-5" }) {
     </svg>
   );
 }
-
 function Calendar({ className = "w-5 h-5" }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -193,7 +196,6 @@ function Calendar({ className = "w-5 h-5" }) {
     </svg>
   );
 }
-
 function HelpCircle({ className = "w-5 h-5" }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -201,7 +203,6 @@ function HelpCircle({ className = "w-5 h-5" }) {
     </svg>
   );
 }
-
 function Share2({ className = "w-5 h-5" }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -209,7 +210,6 @@ function Share2({ className = "w-5 h-5" }) {
     </svg>
   );
 }
-
 function Check({ className = "w-5 h-5" }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -217,7 +217,6 @@ function Check({ className = "w-5 h-5" }) {
     </svg>
   );
 }
-
 function Sun({ className = "w-5 h-5" }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -225,7 +224,6 @@ function Sun({ className = "w-5 h-5" }) {
     </svg>
   );
 }
-
 function Moon({ className = "w-5 h-5" }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -233,7 +231,6 @@ function Moon({ className = "w-5 h-5" }) {
     </svg>
   );
 }
-
 function Mail({ className = "w-5 h-5" }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -241,7 +238,6 @@ function Mail({ className = "w-5 h-5" }) {
     </svg>
   );
 }
-
 function UserIcon({ className = "w-5 h-5" }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -249,7 +245,6 @@ function UserIcon({ className = "w-5 h-5" }) {
     </svg>
   );
 }
-
 function Briefcase({ className = "w-5 h-5" }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -257,7 +252,6 @@ function Briefcase({ className = "w-5 h-5" }) {
     </svg>
   );
 }
-
 function PhoneIcon({ className = "w-5 h-5" }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -265,7 +259,6 @@ function PhoneIcon({ className = "w-5 h-5" }) {
     </svg>
   );
 }
-
 function HomeIcon({ className = "w-5 h-5" }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -273,7 +266,20 @@ function HomeIcon({ className = "w-5 h-5" }) {
     </svg>
   );
 }
-
+function Volume2({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
+    </svg>
+  );
+}
+function VolumeX({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zM17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path>
+    </svg>
+  );
+}
 const SKILL_OPTIONS = [
   "Content Creation",
   "Photography & Editing",
@@ -283,7 +289,6 @@ const SKILL_OPTIONS = [
   "Hairstyling (Barbing)",
   "Hairdressing"
 ];
-
 const HALL_OPTIONS = [
   "Lord Tedder Hall",
   "Kenneth Mellanby",
@@ -296,35 +301,29 @@ const HALL_OPTIONS = [
   "Queen Idia",
   "Other"
 ];
-
 const LEVEL_OPTIONS = ["100", "200", "300", "400", "500", "600"];
-
 const LEARNING_MODES = [
   "Physical (in-person)",
   "Online",
   "Hybrid (combination of physical and online)",
   "I'm comfortable with any of the above"
 ];
-
 const KNOWLEDGE_LEVELS = [
   "I have no prior knowledge",
   "I have basic knowledge but want to improve",
   "I have some experience and want to become better"
 ];
-
 const REASONS = [
   "To develop a new skill",
   "To earn money or become self-employed",
   "To support my academic or professional development",
   "Other"
 ];
-
 const ATTEND_OPTIONS = [
   "Yes, I will attend",
   "I may attend",
   "No, I may not be available"
 ];
-
 const DAYS_OF_WEEK = [
   "Monday",
   "Tuesday",
@@ -334,7 +333,6 @@ const DAYS_OF_WEEK = [
   "Saturday",
   "Sunday"
 ];
-
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState('');
@@ -344,20 +342,17 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [headerLogoError, setHeaderLogoError] = useState(false);
   const [footerLogoError, setFooterLogoError] = useState(false);
-
   const handleSkillSelect = (skillTitle) => {
     setSelectedSkill(skillTitle);
     showToast(`Selected "${skillTitle}". Ready for registration!`);
     setIsModalOpen(true);
   };
-
   const showToast = (msg) => {
     setToastMessage(msg);
     setTimeout(() => {
       setToastMessage('');
     }, 4000);
   };
-
   const scrollToSection = (id) => {
     setMobileMenuOpen(false);
     const element = document.getElementById(id);
@@ -365,7 +360,6 @@ function App() {
       element.scrollIntoView({ behavior: 'smooth' });
     }
   };
-
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href).then(() => {
       showToast('Page link copied to clipboard!');
@@ -373,19 +367,16 @@ function App() {
       showToast('Failed to copy link.');
     });
   };
-
   return (
     <div className={`min-h-screen ${isDark ? 'bg-[#0D1B2A] text-slate-100' : 'bg-slate-50 text-slate-900'} font-sans selection:bg-[#00B4D8] selection:text-white relative overflow-x-hidden transition-colors duration-300`}>
-      
       <ParticleCanvas/>
-
+      <BackgroundMusic isDark={isDark} />
       {toastMessage && (
         <div className="fixed bottom-6 right-6 z-50 bg-[#00B4D8] text-slate-950 px-5 py-3 rounded-xl shadow-2xl font-bold flex items-center gap-3 animate-bounce border border-cyan-200">
           <Sparkles className="w-5 h-5"/>
           <span>{toastMessage}</span>
         </div>
       )}
-
       <header className={`sticky top-0 z-40 backdrop-blur-md ${isDark ? 'bg-[#0D1B2A]/80 border-slate-800/80' : 'bg-white/80 border-slate-200'} border-b transition-all duration-300`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
@@ -416,14 +407,12 @@ function App() {
                 </span>
               </div>
             </div>
-
             <nav className={`hidden md:flex items-center gap-8 font-medium text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
               <button onClick={() => scrollToSection('about')} className="hover:text-[#00B4D8] transition-colors">About</button>
               <button onClick={() => scrollToSection('speakers')} className="hover:text-[#00B4D8] transition-colors">Contributors</button>
               <button onClick={() => scrollToSection('skills')} className="hover:text-[#00B4D8] transition-colors">Skills Directory</button>
               <button onClick={() => scrollToSection('process')} className="hover:text-[#00B4D8] transition-colors">How It Works</button>
             </nav>
-
             <div className="hidden md:flex items-center gap-4">
               <button 
                 onClick={() => setIsDark(!isDark)}
@@ -432,7 +421,6 @@ function App() {
               >
                 {isDark ? <Sun className="w-4 h-4"/> : <Moon className="w-4 h-4"/>}
               </button>
-
               <button 
                 onClick={() => setIsModalOpen(true)} 
                 className="relative inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold text-slate-950 transition-all duration-300 bg-gradient-to-r from-[#00B4D8] via-[#90E0EF] to-[#00B4D8] bg-size-200 hover:bg-right rounded-xl shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:-translate-y-0.5 active:translate-y-0"
@@ -441,7 +429,6 @@ function App() {
                 <ArrowRight className="w-4 h-4 ml-1.5"/>
               </button>
             </div>
-
             <div className="md:hidden flex items-center gap-2">
               <button 
                 onClick={() => setIsDark(!isDark)}
@@ -449,7 +436,6 @@ function App() {
               >
                 {isDark ? <Sun className="w-5 h-5"/> : <Moon className="w-5 h-5"/>}
               </button>
-
               <button 
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className={`p-2 rounded-lg ${isDark ? 'bg-slate-800/60 text-slate-300' : 'bg-slate-200 text-slate-800'} hover:text-white focus:outline-none`}
@@ -459,7 +445,6 @@ function App() {
             </div>
           </div>
         </div>
-
         {mobileMenuOpen && (
           <div className={`md:hidden ${isDark ? 'bg-[#1B263B] border-slate-700/60 text-slate-200' : 'bg-white border-slate-200 text-slate-800'} border-b px-4 pt-2 pb-6 space-y-3 animate-fadeIn`}>
             <button 
@@ -495,30 +480,24 @@ function App() {
           </div>
         )}
       </header>
-
       <section id="hero" className="relative min-h-[calc(100vh-80px)] flex items-center justify-center pt-12 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="max-w-5xl mx-auto text-center relative z-10">
-          
           <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${isDark ? 'bg-cyan-950/60 border-[#00B4D8]/30 text-[#00B4D8]' : 'bg-cyan-50 border-cyan-200 text-cyan-700'} text-xs sm:text-sm font-semibold tracking-wide uppercase mb-8 shadow-inner animate-pulse`}>
             <Sparkles className="w-4 h-4"/>
             <span>Lord Tedder Hall Flagship Event</span>
           </div>
-
           <h1 className={`text-4xl sm:text-6xl md:text-7xl font-black tracking-tight ${isDark ? 'text-white' : 'text-slate-900'} mb-6 leading-none`}>
             2026 FINANCE SUMMIT <br className="hidden sm:inline" />
             <span className="bg-gradient-to-r from-[#00B4D8] via-[#90E0EF] to-[#E0A96D] bg-clip-text text-transparent">
               & SKILL ACQUISITION
             </span>
           </h1>
-
           <p className="text-2xl sm:text-3xl font-extrabold text-[#00B4D8] mb-6 tracking-wide">
             Learn. Earn. Grow.
           </p>
-
           <p className={`max-w-3xl mx-auto text-base sm:text-lg ${isDark ? 'text-slate-300' : 'text-slate-600'} leading-relaxed mb-10 font-normal`}>
             Discover practical skills, explore new income opportunities, and learn directly from Tedderites who are actively building successful businesses while navigating student life.
           </p>
-
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 mb-12 text-sm font-medium">
             <div className={`flex items-center gap-2 px-4 py-2 rounded-lg ${isDark ? 'bg-slate-900/60 border-slate-800 text-slate-300' : 'bg-white border-slate-200 text-slate-700 shadow-sm'}`}>
               <MapPin className="w-4 h-4 text-[#00B4D8]"/>
@@ -533,7 +512,6 @@ function App() {
               <span>Limited Slots</span>
             </div>
           </div>
-
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
             <button
               onClick={() => scrollToSection('skills')}
@@ -542,7 +520,6 @@ function App() {
               <span>Explore The Skills</span>
               <ChevronDown className="w-5 h-5 text-[#00B4D8] group-hover:translate-y-1 transition-transform"/>
             </button>
-
             <button
               onClick={() => setIsModalOpen(true)}
               className="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-[#00B4D8] to-[#90E0EF] text-slate-950 font-extrabold text-base transition-all duration-300 shadow-xl shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2"
@@ -551,13 +528,10 @@ function App() {
               <ArrowRight className="w-5 h-5"/>
             </button>
           </div>
-
         </div>
       </section>
-
       <section id="about" className={`py-24 ${isDark ? 'bg-[#1B263B]/40 border-slate-800/80' : 'bg-slate-100 border-slate-200'} relative border-t border-b`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-xs font-bold uppercase tracking-widest text-[#00B4D8] mb-3">About The Programme</h2>
             <p className={`text-3xl sm:text-4xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>Two experiences. One opportunity.</p>
@@ -565,7 +539,6 @@ function App() {
               Designed specifically to help Tedderites take charge of their financial future through theoretical insight and actionable mastery.
             </p>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className={`group relative rounded-3xl ${isDark ? 'bg-gradient-to-b from-[#1B263B] to-[#0D1B2A] border-slate-700/60' : 'bg-white border-slate-200 shadow-xl'} p-8 sm:p-10 border hover:border-[#00B4D8]/50 transition-all duration-300 flex flex-col justify-between`}>
               <div>
@@ -575,7 +548,6 @@ function App() {
                   </div>
                   <span className={`text-4xl font-black ${isDark ? 'text-slate-700' : 'text-slate-200'} group-hover:text-[#00B4D8]/40 transition-colors`}>01</span>
                 </div>
-                
                 <h3 className="text-xs font-semibold tracking-wider text-[#00B4D8] uppercase mb-2">Part One</h3>
                 <h4 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-slate-900'} mb-4`}>FINANCE SUMMIT</h4>
                 <p className={`text-lg font-medium ${isDark ? 'text-slate-200' : 'text-slate-800'} mb-4`}>"Three journeys. Three perspectives."</p>
@@ -583,13 +555,11 @@ function App() {
                   Hear directly from three Tedderites who have successfully built income-generating ventures. Gain real-world intelligence on how they generate, manage, and scale income while pursuing academic excellence.
                 </p>
               </div>
-
               <div className={`pt-6 border-t ${isDark ? 'border-slate-800/80 text-slate-400' : 'border-slate-100 text-slate-500'} flex items-center justify-between text-xs font-medium`}>
                 <span>Keynote & Panel Discussions</span>
                 <span className="text-[#00B4D8]">3 Guest Speakers</span>
               </div>
             </div>
-
             <div className={`group relative rounded-3xl ${isDark ? 'bg-gradient-to-b from-[#1B263B] to-[#0D1B2A] border-slate-700/60' : 'bg-white border-slate-200 shadow-xl'} p-8 sm:p-10 border hover:border-[#E0A96D]/50 transition-all duration-300 flex flex-col justify-between`}>
               <div>
                 <div className="flex items-center justify-between mb-8">
@@ -598,7 +568,6 @@ function App() {
                   </div>
                   <span className={`text-4xl font-black ${isDark ? 'text-slate-700' : 'text-slate-200'} group-hover:text-[#E0A96D]/40 transition-colors`}>02</span>
                 </div>
-                
                 <h3 className="text-xs font-semibold tracking-wider text-[#E0A96D] uppercase mb-2">Part Two</h3>
                 <h4 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-slate-900'} mb-4`}>SKILL ACQUISITION</h4>
                 <p className={`text-lg font-medium ${isDark ? 'text-slate-200' : 'text-slate-800'} mb-4`}>"Seven skills. Your choice. Three selected."</p>
@@ -606,71 +575,19 @@ function App() {
                   Explore seven high-value skills across digital media, technology, and physical trades. Select your primary choice during registration. The top 3 voted skills will be hosted live with expert tutors!
                 </p>
               </div>
-
               <div className={`pt-6 border-t ${isDark ? 'border-slate-800/80 text-slate-400' : 'border-slate-100 text-slate-500'} flex items-center justify-between text-xs font-medium`}>
                 <span>Hands-On Masterclasses</span>
                 <span className="text-[#E0A96D]">Top 3 Voted Taught Live</span>
               </div>
             </div>
-
           </div>
-
         </div>
       </section>
-
       <section id="speakers" className="py-24 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-[#00B4D8] mb-3">The Speakers</h2>
-            <p className={`text-3xl sm:text-4xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>Three journeys. Three perspectives.</p>
-            <p className={`mt-4 ${isDark ? 'text-slate-300' : 'text-slate-600'} text-base`}>
-              Our contributors will share practical lessons from their respective fields and business experiences.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3].map((num) => (
-              <div 
-                key={num}
-                className={`group relative ${isDark ? 'bg-[#1B263B]/60 border-slate-700/60' : 'bg-white border-slate-200 shadow-xl'} rounded-3xl p-6 border hover:border-[#00B4D8]/60 transition-all duration-300 overflow-hidden flex flex-col items-center text-center`}
-              >
-                <div className={`absolute top-4 right-4 px-3 py-1 rounded-full ${isDark ? 'bg-slate-900/80 border-slate-700 text-slate-400' : 'bg-slate-100 border-slate-200 text-slate-600'} text-xs font-semibold`}>
-                  Coming Soon
-                </div>
-
-                <div className={`w-32 h-32 rounded-2xl ${isDark ? 'bg-gradient-to-br from-slate-800 to-slate-900 border-slate-600' : 'bg-gradient-to-br from-slate-100 to-slate-200 border-slate-300'} border-2 border-dashed flex flex-col items-center justify-center my-6 group-hover:scale-105 transition-transform relative overflow-hidden`}>
-                  <Users className="w-12 h-12 text-slate-400 mb-1"/>
-                  <span className="text-[10px] text-slate-400 font-mono uppercase tracking-wider">Photo Pending</span>
-                  
-                  <div className="absolute inset-0 -translate-x-full group-hover:animate-shimmer bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-                </div>
-
-                <h3 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-slate-900'} mb-1`}>CONTRIBUTOR 0{num}</h3>
-                <p className="text-xs font-medium text-[#00B4D8] uppercase tracking-wider mb-4">
-                  {num === 1 ? 'E-Commerce & Digital Products' : num === 2 ? 'Tech Freelancing & Web' : 'Creative Economy & Media'}
-                </p>
-
-                <div className={`w-full pt-4 border-t ${isDark ? 'border-slate-800/80 text-slate-400' : 'border-slate-100 text-slate-500'} text-xs leading-relaxed min-h-[70px] flex items-center justify-center`}>
-                  <span>Speaker details and profile photograph will be revealed once officially confirmed.</span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-8 text-center">
-            <span className={`inline-flex items-center gap-2 text-xs ${isDark ? 'text-slate-400 bg-slate-900/40 border-slate-800' : 'text-slate-600 bg-slate-100 border-slate-200'} px-4 py-2 rounded-full border italic`}>
-              <HelpCircle className="w-4 h-4 text-[#00B4D8]"/>
-              Are you a Tedderite running a business? Reach out to the executive committee to share your story!
-            </span>
-          </div>
-
-        </div>
+        <ContributorsSection isDark={isDark} />
       </section>
-
       <section id="skills" className={`py-24 ${isDark ? 'bg-[#1B263B]/30 border-slate-800/80' : 'bg-slate-100 border-slate-200'} border-t border-b relative`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
             <div>
               <h2 className="text-xs font-bold uppercase tracking-widest text-[#00B4D8] mb-3">Skill Acquisition Directory</h2>
@@ -679,7 +596,6 @@ function App() {
                 Explore the options and select ONE skill you would love to learn. Your selection directly determines which top three skills make it into the final live masterclass schedule!
               </p>
             </div>
-            
             <div className="mt-6 md:mt-0 flex flex-wrap gap-2">
               <button 
                 onClick={() => setActiveTab('all')}
@@ -701,14 +617,12 @@ function App() {
               </button>
             </div>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {skillsData
               .filter(skill => activeTab === 'all' || skill.category === activeTab)
               .map((skill) => {
                 const isSelected = selectedSkill === skill.title;
                 const IconComponent = skill.icon;
-                
                 return (
                   <div 
                     key={skill.id}
@@ -720,15 +634,12 @@ function App() {
                   >
                     <div className={`relative h-48 ${isDark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'} border-b overflow-hidden flex items-center justify-center group-hover:opacity-95 transition-opacity`}>
                       <div className={`absolute inset-0 bg-gradient-to-br ${skill.gradient} opacity-20`} />
-                      
                       <div className={`z-10 p-4 rounded-2xl ${isDark ? 'bg-slate-950/85 border-slate-700 text-white' : 'bg-white border-slate-200 text-slate-800 shadow-md'} border group-hover:scale-110 transition-transform`}>
                         <IconComponent className="w-10 h-10 text-[#00B4D8]"/>
                       </div>
-
                       <div className={`absolute bottom-2 right-3 px-2 py-1 rounded ${isDark ? 'bg-slate-950/70 border-slate-800 text-slate-400' : 'bg-white/80 border-slate-200 text-slate-600'} border text-[10px] font-mono`}>
                         Visual Placeholder
                       </div>
-
                       {isSelected && (
                         <div className="absolute top-3 left-3 bg-[#00B4D8] text-slate-950 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5 shadow-lg">
                           <Check className="w-3.5 h-3.5"/>
@@ -736,7 +647,6 @@ function App() {
                         </div>
                       )}
                     </div>
-
                     <div className="p-6 flex-1 flex flex-col justify-between">
                       <div>
                         <div className="flex items-center justify-between mb-2">
@@ -745,11 +655,9 @@ function App() {
                             {skill.categoryTag}
                           </span>
                         </div>
-
                         <h3 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-slate-900'} mb-2`}>{skill.title}</h3>
                         <p className={`${isDark ? 'text-slate-300' : 'text-slate-600'} text-sm leading-relaxed mb-6`}>{skill.description}</p>
                       </div>
-
                       <div>
                         <div className={`mb-6 p-3 rounded-xl ${isDark ? 'bg-slate-900/80 border-slate-800 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-700'} border text-xs flex items-start gap-2.5`}>
                           <Award className="w-4 h-4 text-[#E0A96D] shrink-0 mt-0.5"/>
@@ -758,7 +666,6 @@ function App() {
                             <span className={`${isDark ? 'text-slate-400' : 'text-slate-600'}`}>{skill.requirement}</span>
                           </div>
                         </div>
-
                         <button
                           onClick={() => handleSkillSelect(skill.title)}
                           className={`w-full py-3 px-4 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 ${
@@ -785,13 +692,10 @@ function App() {
                 );
               })}
           </div>
-
         </div>
       </section>
-
       <section id="process" className="py-24 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
           <div className="text-center max-w-3xl mx-auto mb-20">
             <h2 className="text-xs font-bold uppercase tracking-widest text-[#00B4D8] mb-3">The Roadmap</h2>
             <p className={`text-3xl sm:text-4xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>Your choice shapes the programme.</p>
@@ -799,7 +703,6 @@ function App() {
               Here is how your vote transforms the summit schedule in 4 simple steps.
             </p>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
             <div className={`${isDark ? 'bg-[#1B263B]/50 border-slate-700/60' : 'bg-white border-slate-200 shadow-xl'} rounded-2xl p-6 border relative z-10 flex flex-col justify-between`}>
               <div>
@@ -815,7 +718,6 @@ function App() {
                 Step 1 of 4
               </div>
             </div>
-
             <div className={`${isDark ? 'bg-[#1B263B]/50 border-slate-700/60' : 'bg-white border-slate-200 shadow-xl'} rounded-2xl p-6 border relative z-10 flex flex-col justify-between`}>
               <div>
                 <div className="w-12 h-12 rounded-xl bg-cyan-950 text-[#00B4D8] border border-cyan-800/50 flex items-center justify-center font-black text-lg mb-6">
@@ -830,7 +732,6 @@ function App() {
                 Step 2 of 4
               </div>
             </div>
-
             <div className={`${isDark ? 'bg-[#1B263B]/50 border-slate-700/60' : 'bg-white border-slate-200 shadow-xl'} rounded-2xl p-6 border relative z-10 flex flex-col justify-between`}>
               <div>
                 <div className="w-12 h-12 rounded-xl bg-cyan-950 text-[#00B4D8] border border-cyan-800/50 flex items-center justify-center font-black text-lg mb-6">
@@ -845,7 +746,6 @@ function App() {
                 Step 3 of 4
               </div>
             </div>
-
             <div className={`${isDark ? 'bg-[#1B263B]/50 border-slate-700/60' : 'bg-white border-slate-200 shadow-xl'} rounded-2xl p-6 border relative z-10 flex flex-col justify-between`}>
               <div>
                 <div className="w-12 h-12 rounded-xl bg-[#E0A96D]/20 text-[#E0A96D] border border-[#E0A96D]/40 flex items-center justify-center font-black text-lg mb-6">
@@ -860,31 +760,22 @@ function App() {
                 Final Masterclass Reveal
               </div>
             </div>
-
           </div>
-
         </div>
       </section>
-
-      {/* Registration Call To Action Section */}
       <section id="register" className={`py-24 ${isDark ? 'bg-[#1B263B]/40 border-slate-800/80' : 'bg-slate-100 border-slate-200'} border-t border-b relative`}>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          
           <div className={`${isDark ? 'bg-[#0D1B2A] border-slate-700' : 'bg-white border-slate-200 shadow-2xl'} rounded-3xl p-8 sm:p-14 border relative overflow-hidden`}>
-            
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950 text-[#00B4D8] text-xs font-bold uppercase mb-4">
               <Sparkles className="w-3.5 h-3.5"/>
               <span>Secure Your Spot</span>
             </div>
-            
             <h2 className={`text-3xl sm:text-5xl font-black ${isDark ? 'text-white' : 'text-slate-900'} mb-4`}>
               Ready to Join the Summit?
             </h2>
-            
             <p className={`${isDark ? 'text-slate-300' : 'text-slate-600'} text-base sm:text-lg max-w-2xl mx-auto mb-8`}>
               Cast your vote for your preferred skill and reserve your seat at Lord Tedder Hall's flagship 2026 Finance Summit.
             </p>
-
             <button
               onClick={() => setIsModalOpen(true)}
               className="px-10 py-5 rounded-2xl bg-gradient-to-r from-[#00B4D8] via-[#90E0EF] to-[#00B4D8] text-slate-950 font-extrabold text-lg transition-all duration-300 shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-500/50 hover:-translate-y-1 inline-flex items-center gap-3"
@@ -892,7 +783,6 @@ function App() {
               <span>Register Now</span>
               <ArrowRight className="w-5 h-5"/>
             </button>
-
             <div className="mt-6">
               <a
                 href={GOOGLE_FORM_URL}
@@ -904,16 +794,11 @@ function App() {
                 <ExternalLink className="w-3.5 h-3.5"/>
               </a>
             </div>
-
           </div>
-
         </div>
       </section>
-
-      {/* Footer */}
       <footer className={`${isDark ? 'bg-[#09121D] border-slate-800 text-slate-400' : 'bg-slate-900 border-slate-800 text-slate-400'} border-t pt-16 pb-12 text-sm`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-12 border-b border-slate-800">
             <div className="md:col-span-6 space-y-4">
               <div className="flex items-center gap-2 font-black text-xl text-white">
@@ -942,7 +827,6 @@ function App() {
                 <span>#LearnEarnGrow</span>
               </div>
             </div>
-
             <div className="md:col-span-3 space-y-3">
               <h4 className="text-xs font-bold text-white uppercase tracking-wider">Navigation</h4>
               <ul className="space-y-2 text-xs">
@@ -953,7 +837,6 @@ function App() {
                 <li><button onClick={() => setIsModalOpen(true)} className="hover:text-[#00B4D8]">Register Form</button></li>
               </ul>
             </div>
-
             <div className="md:col-span-3 space-y-3">
               <h4 className="text-xs font-bold text-white uppercase tracking-wider">Venue & Host</h4>
               <p className="text-xs text-slate-300 leading-relaxed">
@@ -978,9 +861,7 @@ function App() {
                 </button>
               </div>
             </div>
-
           </div>
-
           <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 text-center sm:text-left">
             <p>© 2026 Lord Tedder Hall Finance Summit Committee. All rights reserved.</p>
             <p className="flex items-center justify-center gap-1">
@@ -993,11 +874,8 @@ function App() {
               <span className="ml-1">built this</span>
             </p>
           </div>
-
         </div>
       </footer>
-
-      {/* 3-Page Registration Modal */}
       {isModalOpen && (
         <RegistrationModal 
           isOpen={isModalOpen} 
@@ -1006,11 +884,211 @@ function App() {
           isDark={isDark}
         />
       )}
-
     </div>
   );
 }
-
+function ContributorsSection({ isDark }) {
+  const [frontIdx, setFrontIdx] = useState(0);
+  const [imgErrors, setImgErrors] = useState({});
+  const touchStartX = useRef(null);
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const handleTouchEnd = (e) => {
+    if (touchStartX.current === null) return;
+    const diffX = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(diffX) > 40) {
+      if (diffX > 0) {
+        setFrontIdx((prev) => (prev - 1 + 3) % 3);
+      } else {
+        setFrontIdx((prev) => (prev + 1) % 3);
+      }
+    }
+    touchStartX.current = null;
+  };
+  const handleCardClick = () => {
+    setFrontIdx((prev) => (prev + 1) % 3);
+  };
+  const currentContributor = CONTRIBUTORS[frontIdx];
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="text-center max-w-3xl mx-auto mb-16">
+        <h2 className="text-xs font-bold uppercase tracking-widest text-[#00B4D8] mb-3">The Speakers</h2>
+        <p className={`text-3xl sm:text-4xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>Three journeys. Three perspectives.</p>
+        <p className={`mt-4 ${isDark ? 'text-slate-300' : 'text-slate-600'} text-base`}>
+          Our contributors will share practical lessons from their respective fields and business experiences.
+        </p>
+      </div>
+      <div 
+        className="relative w-[260px] sm:w-[300px] h-[340px] sm:h-[380px] mx-auto mb-10 cursor-pointer select-none"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        onClick={handleCardClick}
+      >
+        {CONTRIBUTORS.map((c, i) => {
+          const offset = (i - frontIdx + 3) % 3;
+          let transformStyle = '';
+          let zIndex = 10;
+          if (offset === 0) {
+            transformStyle = 'translate-x-0 translate-y-0 rotate-[6deg] scale-100';
+            zIndex = 30;
+          } else if (offset === 1) {
+            transformStyle = 'translate-x-3 -translate-y-3 rotate-[-2deg] scale-95';
+            zIndex = 20;
+          } else {
+            transformStyle = '-translate-x-4 -translate-y-6 rotate-[-8deg] scale-90';
+            zIndex = 10;
+          }
+          const hasError = imgErrors[i];
+          return (
+            <div
+              key={i}
+              style={{ zIndex }}
+              className={`absolute inset-0 bg-white dark:bg-slate-900 border-[10px] border-white dark:border-slate-800 rounded-3xl shadow-2xl overflow-hidden transition-all duration-400 ease-out origin-center ${transformStyle}`}
+            >
+              <div className="absolute top-4 right-4 z-20 px-3 py-1 rounded-full bg-slate-900/80 border border-slate-700 text-slate-300 text-xs font-semibold backdrop-blur-sm">
+                Coming Soon
+              </div>
+              <div className="w-full h-full relative overflow-hidden bg-slate-900 flex items-center justify-center">
+                {!hasError ? (
+                  <img
+                    src={c.photo}
+                    alt={c.role}
+                    className="w-full h-full object-cover"
+                    onError={() => setImgErrors(prev => ({ ...prev, [i]: true }))}
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-slate-800 to-slate-900 flex flex-col items-center justify-center p-6 text-center">
+                    <Users className="w-12 h-12 text-slate-400 mb-2"/>
+                    <span className="text-xs text-slate-400 font-mono uppercase tracking-wider">Photo Pending</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <div className="flex items-center justify-center gap-2 mb-8">
+        {CONTRIBUTORS.map((_, i) => (
+          <button
+            key={i}
+            onClick={(e) => { e.stopPropagation(); setFrontIdx(i); }}
+            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${frontIdx === i ? 'bg-[#00B4D8] w-6' : 'bg-slate-600 dark:bg-slate-700'}`}
+            aria-label={`Show contributor ${i + 1}`}
+          />
+        ))}
+      </div>
+      <div className="text-center max-w-md mx-auto animate-fadeIn" key={frontIdx}>
+        <span className="text-xs font-mono text-slate-400 dark:text-slate-500 uppercase tracking-wider block mb-1">
+          {currentContributor.tag}
+        </span>
+        <h3 className="text-sm sm:text-base font-bold text-[#00B4D8] uppercase tracking-wider mb-2">
+          {currentContributor.role}
+        </h3>
+        <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+          {currentContributor.description}
+        </p>
+      </div>
+      <div className="mt-12 text-center">
+        <span className={`inline-flex items-center gap-2 text-xs ${isDark ? 'text-slate-400 bg-slate-900/40 border-slate-800' : 'text-slate-600 bg-slate-100 border-slate-200'} px-4 py-2 rounded-full border italic`}>
+          <HelpCircle className="w-4 h-4 text-[#00B4D8]"/>
+          Are you a Tedderite running a business? Reach out to the executive committee to share your story!
+        </span>
+      </div>
+    </div>
+  );
+}
+function BackgroundMusic({ isDark }) {
+  const audioRef = useRef(null);
+  const [isMuted, setIsMuted] = useState(false);
+  const [audioLoaded, setAudioLoaded] = useState(true);
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('tedder_summit_muted');
+      if (saved !== null) {
+        setIsMuted(saved === 'true');
+      }
+    } catch (e) {}
+  }, []);
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.volume = 0.25;
+    audio.muted = isMuted;
+    const playAudio = () => {
+      if (!isMuted) {
+        audio.play().catch(() => {});
+      }
+    };
+    playAudio();
+    const handleInteraction = () => {
+      playAudio();
+      window.removeEventListener('click', handleInteraction);
+      window.removeEventListener('touchend', handleInteraction);
+      window.removeEventListener('keydown', handleInteraction);
+    };
+    window.addEventListener('click', handleInteraction, { once: true });
+    window.addEventListener('touchend', handleInteraction, { once: true });
+    window.addEventListener('keydown', handleInteraction, { once: true });
+    const handleVisibility = () => {
+      if (document.hidden) {
+        if (!audio.paused) {
+          audio.pause();
+          audio._wasPlaying = true;
+        }
+      } else {
+        if (audio._wasPlaying && !isMuted) {
+          audio.play().catch(() => {});
+        }
+        audio._wasPlaying = false;
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+    const handleError = () => {
+      setAudioLoaded(false);
+    };
+    audio.addEventListener('error', handleError);
+    return () => {
+      window.removeEventListener('click', handleInteraction);
+      window.removeEventListener('touchend', handleInteraction);
+      window.removeEventListener('keydown', handleInteraction);
+      document.removeEventListener('visibilitychange', handleVisibility);
+      audio.removeEventListener('error', handleError);
+    };
+  }, [isMuted]);
+  const toggleMute = () => {
+    const next = !isMuted;
+    setIsMuted(next);
+    try {
+      localStorage.setItem('tedder_summit_muted', String(next));
+    } catch (e) {}
+    const audio = audioRef.current;
+    if (audio) {
+      audio.muted = next;
+      if (!next && audio.paused) {
+        audio.play().catch(() => {});
+      }
+    }
+  };
+  if (!audioLoaded) {
+    return <audio ref={audioRef} src="music.mp3" loop preload="auto" style={{ display: 'none' }} />;
+  }
+  return (
+    <>
+      <audio ref={audioRef} src="music.mp3" loop preload="auto" style={{ display: 'none' }} />
+      <button
+        onClick={toggleMute}
+        aria-label="Toggle music"
+        className={`fixed bottom-6 left-6 z-40 w-11 h-11 rounded-full flex items-center justify-center border border-[#00B4D8] shadow-lg transition-transform hover:scale-105 active:scale-95 ${
+          isDark ? 'bg-[#0D1B2A] text-[#00B4D8]' : 'bg-white text-slate-900'
+        }`}
+        title={isMuted ? "Unmute Music" : "Mute Music"}
+      >
+        {isMuted ? <VolumeX className="w-5 h-5"/> : <Volume2 className="w-5 h-5"/>}
+      </button>
+    </>
+  );
+}
 function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
   const [page, setPage] = useState(1);
   const [alreadyRegistered, setAlreadyRegistered] = useState(false);
@@ -1020,7 +1098,6 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
   const [errors, setErrors] = useState({});
   const [hallOpen, setHallOpen] = useState(false);
   const hallRef = useRef(null);
-
   const [formData, setFormData] = useState({
     email: '',
     fullName: '',
@@ -1038,13 +1115,11 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
     attendSummit: '',
     days: []
   });
-
   useEffect(() => {
     if (initialSkill) {
       setFormData(prev => ({ ...prev, primarySkill: initialSkill }));
     }
   }, [initialSkill]);
-
   useEffect(() => {
     try {
       const reg = localStorage.getItem('tedder_summit_registered');
@@ -1055,7 +1130,6 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
       }
     } catch (e) {}
   }, []);
-
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (hallRef.current && !hallRef.current.contains(e.target)) {
@@ -1065,7 +1139,6 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
-
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
@@ -1083,7 +1156,6 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
       document.body.style.overflow = 'auto';
     };
   }, [onClose, hallOpen]);
-
   const validatePage1 = () => {
     const newErrors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -1110,7 +1182,6 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-
   const validatePage2 = () => {
     const newErrors = {};
     if (!formData.primarySkill) {
@@ -1135,7 +1206,6 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-
   const validatePage3 = () => {
     const newErrors = {};
     if (!formData.attendSummit) {
@@ -1147,19 +1217,16 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-
   const handleNext = () => {
     if (page === 1 && !validatePage1()) return;
     if (page === 2 && !validatePage2()) return;
     setErrors({});
     setPage(prev => Math.min(prev + 1, 3));
   };
-
   const handleBack = () => {
     setErrors({});
     setPage(prev => Math.max(prev - 1, 1));
   };
-
   const handleDayToggle = (day) => {
     setFormData(prev => {
       const exists = prev.days.includes(day);
@@ -1170,64 +1237,51 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
       }
     });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validatePage3()) return;
-
     setSubmitting(true);
     setSubmitError('');
-
     const params = new URLSearchParams();
     params.append('entry.1436822030', formData.email);
     params.append('entry.991727696', formData.fullName);
     params.append('entry.572861259', formData.department);
     params.append('entry.505370336', formData.phone);
     params.append('entry.1639392937', formData.level);
-
     if (formData.hall === 'Other') {
       params.append('entry.1938204382', '__other_option__');
       params.append('entry.1938204382.other_option_response', formData.hallOther);
     } else {
       params.append('entry.1938204382', formData.hall);
     }
-
     params.append('entry.1236043284', formData.primarySkill);
     params.append('entry.2085868442', formData.learningMode);
     params.append('entry.153020842', formData.knowledgeLevel);
-
     if (formData.reason === 'Other') {
       params.append('entry.567226252', '__other_option__');
       params.append('entry.567226252.other_option_response', formData.reasonOther);
     } else {
       params.append('entry.567226252', formData.reason);
     }
-
     params.append('entry.1970204403', formData.secondSkill);
     params.append('entry.2021353463', formData.attendSummit);
-
     formData.days.forEach(day => {
       params.append('entry.1483739924', day);
     });
-
     params.append('pageHistory', '0,1,2');
-
     try {
       await fetch(GOOGLE_FORM_ACTION, {
         method: 'POST',
         mode: 'no-cors',
         body: params
       });
-
       const successPayload = {
         fullName: formData.fullName,
         primarySkill: formData.primarySkill
       };
-
       try {
         localStorage.setItem('tedder_summit_registered', JSON.stringify(successPayload));
       } catch (err) {}
-
       setSuccessData(successPayload);
       setAlreadyRegistered(true);
     } catch (err) {
@@ -1236,11 +1290,9 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
       setSubmitting(false);
     }
   };
-
   const completedCount = alreadyRegistered ? 3 : (page - 1);
   const progressPercent = (completedCount / 3) * 100;
   const progressText = Math.round(progressPercent) + '%';
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fadeIn">
       <div 
@@ -1252,7 +1304,6 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
         >
           <X className="w-5 h-5"/>
         </button>
-
         {alreadyRegistered ? (
           <div className="text-center py-8">
             <div className="w-16 h-16 rounded-full bg-[#00B4D8]/20 text-[#00B4D8] flex items-center justify-center mx-auto mb-4 border border-[#00B4D8]/40">
@@ -1312,9 +1363,7 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
                 {page === 3 && "Confirm availability and convenient schedule days."}
               </p>
             </div>
-
             <form onSubmit={handleSubmit} className="space-y-6">
-              
               {page === 1 && (
                 <div className="space-y-4 animate-fadeIn">
                   <div>
@@ -1334,7 +1383,6 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
                     </div>
                     {errors.email && <p className="text-xs text-red-400 mt-1">{errors.email}</p>}
                   </div>
-
                   <div>
                     <label className={`block text-xs font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'} uppercase tracking-wider mb-1.5`}>
                       Full Name (Surname First) <span className="text-[#00B4D8]">*</span>
@@ -1352,7 +1400,6 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
                     </div>
                     {errors.fullName && <p className="text-xs text-red-400 mt-1">{errors.fullName}</p>}
                   </div>
-
                   <div>
                     <label className={`block text-xs font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'} uppercase tracking-wider mb-1.5`}>
                       Faculty / Department <span className="text-[#00B4D8]">*</span>
@@ -1370,7 +1417,6 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
                     </div>
                     {errors.department && <p className="text-xs text-red-400 mt-1">{errors.department}</p>}
                   </div>
-
                   <div>
                     <label className={`block text-xs font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'} uppercase tracking-wider mb-1.5`}>
                       WhatsApp Number <span className="text-[#00B4D8]">*</span>
@@ -1388,7 +1434,6 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
                     </div>
                     {errors.phone && <p className="text-xs text-red-400 mt-1">{errors.phone}</p>}
                   </div>
-
                   <div>
                     <label className={`block text-xs font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'} uppercase tracking-wider mb-2`}>
                       Level <span className="text-[#00B4D8]">*</span>
@@ -1411,7 +1456,6 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
                     </div>
                     {errors.level && <p className="text-xs text-red-400 mt-1">{errors.level}</p>}
                   </div>
-
                   <div className="relative" ref={hallRef}>
                     <label className={`block text-xs font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'} uppercase tracking-wider mb-1.5`}>
                       Hall of Residence <span className="text-[#00B4D8]">*</span>
@@ -1427,7 +1471,6 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
                       </span>
                       <ChevronDown className={`w-5 h-5 text-slate-400 shrink-0 transition-transform duration-300 ${hallOpen ? 'rotate-180' : ''}`} />
                     </button>
-
                     {hallOpen && (
                       <div className={`mt-[8px] w-full rounded-xl ${isDark ? 'bg-[#0D1B2A] border-[#00B4D8] text-slate-100' : 'bg-white border-[#00B4D8] text-slate-900'} border shadow-2xl max-h-[45vh] overflow-y-auto`}>
                         {HALL_OPTIONS.map(h => {
@@ -1454,7 +1497,6 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
                     )}
                     {errors.hall && <p className="text-xs text-red-400 mt-1">{errors.hall}</p>}
                   </div>
-
                   {formData.hall === 'Other' && (
                     <div className="animate-fadeIn">
                       <label className={`block text-xs font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'} uppercase tracking-wider mb-1.5`}>
@@ -1473,7 +1515,6 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
                   )}
                 </div>
               )}
-
               {page === 2 && (
                 <div className="space-y-4 animate-fadeIn">
                   <div>
@@ -1493,7 +1534,6 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
                     </select>
                     {errors.primarySkill && <p className="text-xs text-red-400 mt-1">{errors.primarySkill}</p>}
                   </div>
-
                   <div>
                     <label className={`block text-xs font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'} uppercase tracking-wider mb-1.5`}>
                       Preferred Mode of Learning <span className="text-[#00B4D8]">*</span>
@@ -1511,7 +1551,6 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
                     </select>
                     {errors.learningMode && <p className="text-xs text-red-400 mt-1">{errors.learningMode}</p>}
                   </div>
-
                   <div>
                     <label className={`block text-xs font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'} uppercase tracking-wider mb-1.5`}>
                       Current knowledge of your preferred skill <span className="text-[#00B4D8]">*</span>
@@ -1529,7 +1568,6 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
                     </select>
                     {errors.knowledgeLevel && <p className="text-xs text-red-400 mt-1">{errors.knowledgeLevel}</p>}
                   </div>
-
                   <div>
                     <label className={`block text-xs font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'} uppercase tracking-wider mb-1.5`}>
                       Primary reason for wanting to learn this skill <span className="text-[#00B4D8]">*</span>
@@ -1547,7 +1585,6 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
                     </select>
                     {errors.reason && <p className="text-xs text-red-400 mt-1">{errors.reason}</p>}
                   </div>
-
                   {formData.reason === 'Other' && (
                     <div className="animate-fadeIn">
                       <label className={`block text-xs font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'} uppercase tracking-wider mb-1.5`}>
@@ -1564,7 +1601,6 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
                       {errors.reasonOther && <p className="text-xs text-red-400 mt-1">{errors.reasonOther}</p>}
                     </div>
                   )}
-
                   <div>
                     <label className={`block text-xs font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'} uppercase tracking-wider mb-1.5`}>
                       Which other skill would you also be interested in? <span className="text-[#00B4D8]">*</span>
@@ -1586,7 +1622,6 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
                   </div>
                 </div>
               )}
-
               {page === 3 && (
                 <div className="space-y-6 animate-fadeIn">
                   <div>
@@ -1617,7 +1652,6 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
                     </div>
                     {errors.attendSummit && <p className="text-xs text-red-400 mt-1">{errors.attendSummit}</p>}
                   </div>
-
                   <div>
                     <label className={`block text-xs font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'} uppercase tracking-wider mb-2`}>
                       Which days of the week would generally be most convenient for you? (Select at least one) <span className="text-[#00B4D8]">*</span>
@@ -1646,7 +1680,6 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
                     </div>
                     {errors.days && <p className="text-xs text-red-400 mt-1">{errors.days}</p>}
                   </div>
-
                   {submitError && (
                     <div className="p-4 rounded-xl bg-red-950/50 border border-red-500 text-red-300 text-sm font-semibold text-center">
                       {submitError}
@@ -1654,7 +1687,6 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
                   )}
                 </div>
               )}
-
               <div className="pt-4 border-t border-slate-800 flex items-center justify-between">
                 {page > 1 ? (
                   <button
@@ -1667,7 +1699,6 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
                 ) : (
                   <div/>
                 )}
-
                 {page < 3 ? (
                   <button
                     type="button"
@@ -1688,9 +1719,7 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
                   </button>
                 )}
               </div>
-
             </form>
-
             <div className="mt-8 pt-4 border-t border-slate-800 text-center">
               <a
                 href={GOOGLE_FORM_URL}
@@ -1702,38 +1731,29 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
                 <ExternalLink className="w-3.5 h-3.5"/>
               </a>
             </div>
-
           </div>
         )}
-
       </div>
     </div>
   );
 }
-
 function ParticleCanvas() {
   const canvasRef = useRef(null);
-
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       return;
     }
-
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     let animationFrameId;
-
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
-
     const handleResize = () => {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
     };
-
     window.addEventListener('resize', handleResize);
-
     const particleCount = width < 768 ? 15 : Math.min(Math.floor(width / 25), 45);
     const particles = Array.from({ length: particleCount }, () => ({
       x: Math.random() * width,
@@ -1743,36 +1763,29 @@ function ParticleCanvas() {
       radius: Math.random() * 2 + 1,
       color: Math.random() > 0.5 ? 'rgba(0, 180, 216, 0.25)' : 'rgba(144, 224, 239, 0.15)'
     }));
-
     const render = () => {
       if (document.hidden) {
         animationFrameId = requestAnimationFrame(render);
         return;
       }
-
       ctx.clearRect(0, 0, width, height);
-
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
         p.x += p.vx;
         p.y += p.vy;
-
         if (p.x < 0) p.x = width;
         if (p.x > width) p.x = 0;
         if (p.y < 0) p.y = height;
         if (p.y > height) p.y = 0;
-
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fillStyle = p.color;
         ctx.fill();
-
         for (let j = i + 1; j < particles.length; j++) {
           const p2 = particles[j];
           const dx = p.x - p2.x;
           const dy = p.y - p2.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-
           if (dist < 120) {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
@@ -1783,18 +1796,14 @@ function ParticleCanvas() {
           }
         }
       }
-
       animationFrameId = requestAnimationFrame(render);
     };
-
     render();
-
     return () => {
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
-
   return (
     <canvas 
       ref={canvasRef} 
@@ -1802,7 +1811,6 @@ function ParticleCanvas() {
     />
   );
 }
-
 const skillsData = [
   {
     id: 'skill-01',
@@ -1882,7 +1890,6 @@ const skillsData = [
     requirement: 'Training materials provided on site; no prior skills needed.'
   }
 ];
-
 ReactDOM.render(<App/>, document.getElementById('root'));
 </script>
 </body>
