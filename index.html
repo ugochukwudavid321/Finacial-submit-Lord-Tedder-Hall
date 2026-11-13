@@ -372,8 +372,8 @@ function App() {
       <ParticleCanvas/>
       <BackgroundMusic isDark={isDark} />
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-[#00B4D8] text-slate-950 px-5 py-3 rounded-xl shadow-2xl font-bold flex items-center gap-3 animate-bounce border border-cyan-200">
-          <Sparkles className="w-5 h-5"/>
+        <div className="fixed bottom-20 sm:bottom-6 right-4 sm:right-6 z-50 max-w-[calc(100vw-2rem)] sm:max-w-sm bg-[#00B4D8] text-slate-950 px-5 py-3 rounded-xl shadow-2xl font-bold flex items-center gap-3 animate-bounce border border-cyan-200">
+          <Sparkles className="w-5 h-5 shrink-0"/>
           <span>{toastMessage}</span>
         </div>
       )}
@@ -888,7 +888,7 @@ function App() {
   );
 }
 function ContributorsSection({ isDark }) {
-  const [frontIdx, setFrontIdx] = useState(0);
+  const [activeIdx, setActiveIdx] = useState(0);
   const [imgErrors, setImgErrors] = useState({});
   const touchStartX = useRef(null);
   const handleTouchStart = (e) => {
@@ -899,20 +899,22 @@ function ContributorsSection({ isDark }) {
     const diffX = e.changedTouches[0].clientX - touchStartX.current;
     if (Math.abs(diffX) > 40) {
       if (diffX > 0) {
-        setFrontIdx((prev) => (prev - 1 + 3) % 3);
+        setActiveIdx((prev) => (prev - 1 + CONTRIBUTORS.length) % CONTRIBUTORS.length);
       } else {
-        setFrontIdx((prev) => (prev + 1) % 3);
+        setActiveIdx((prev) => (prev + 1) % CONTRIBUTORS.length);
       }
     }
     touchStartX.current = null;
   };
-  const handleCardClick = () => {
-    setFrontIdx((prev) => (prev + 1) % 3);
-  };
-  const currentContributor = CONTRIBUTORS[frontIdx];
+  const currentContributor = CONTRIBUTORS[activeIdx];
+  const restingTransforms = [
+    { x: -78, y: 0, rot: -9 },
+    { x: 0, y: -10, rot: -1 },
+    { x: 78, y: 0, rot: 8 }
+  ];
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="text-center max-w-3xl mx-auto mb-16">
+      <div className="text-center max-w-3xl mx-auto mb-12">
         <h2 className="text-xs font-bold uppercase tracking-widest text-[#00B4D8] mb-3">The Speakers</h2>
         <p className={`text-3xl sm:text-4xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>Three journeys. Three perspectives.</p>
         <p className={`mt-4 ${isDark ? 'text-slate-300' : 'text-slate-600'} text-base`}>
@@ -920,33 +922,32 @@ function ContributorsSection({ isDark }) {
         </p>
       </div>
       <div 
-        className="relative w-[260px] sm:w-[300px] h-[340px] sm:h-[380px] mx-auto mb-10 cursor-pointer select-none"
+        className="relative w-full max-w-[min(340px,calc(100vw-32px))] h-[300px] mx-auto mb-8 select-none"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
-        onClick={handleCardClick}
       >
         {CONTRIBUTORS.map((c, i) => {
-          const offset = (i - frontIdx + 3) % 3;
-          let transformStyle = '';
-          let zIndex = 10;
-          if (offset === 0) {
-            transformStyle = 'translate-x-0 translate-y-0 rotate-[6deg] scale-100';
-            zIndex = 30;
-          } else if (offset === 1) {
-            transformStyle = 'translate-x-3 -translate-y-3 rotate-[-2deg] scale-95';
-            zIndex = 20;
-          } else {
-            transformStyle = '-translate-x-4 -translate-y-6 rotate-[-8deg] scale-90';
-            zIndex = 10;
-          }
+          const isActive = i === activeIdx;
+          const base = restingTransforms[i];
+          const translateY = isActive ? base.y - 14 : base.y;
+          const scale = isActive ? 1.06 : 1;
+          const zIndex = isActive ? 30 : i === 1 ? 20 : 10 + i;
           const hasError = imgErrors[i];
           return (
-            <div
+            <button
+              type="button"
               key={i}
-              style={{ zIndex }}
-              className={`absolute inset-0 bg-white dark:bg-slate-900 border-[10px] border-white dark:border-slate-800 rounded-3xl shadow-2xl overflow-hidden transition-all duration-400 ease-out origin-center ${transformStyle}`}
+              onClick={() => setActiveIdx(i)}
+              aria-label={`Select ${c.tag}: ${c.role}`}
+              aria-pressed={isActive}
+              style={{
+                zIndex,
+                transform: `translate(${base.x}px, ${translateY}px) rotate(${base.rot}deg) scale(${scale})`,
+                transformOrigin: 'bottom center'
+              }}
+              className="absolute bottom-0 left-1/2 -ml-[65px] w-[130px] h-[175px] bg-white border-[5px] border-white rounded-2xl shadow-xl overflow-hidden transition-transform duration-400 ease-out cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00B4D8]"
             >
-              <div className="absolute top-4 right-4 z-20 px-3 py-1 rounded-full bg-slate-900/80 border border-slate-700 text-slate-300 text-xs font-semibold backdrop-blur-sm">
+              <div className="absolute top-2 right-2 z-20 px-2 py-0.5 rounded-full bg-slate-900/80 border border-slate-700 text-slate-200 text-[9px] font-semibold backdrop-blur-sm">
                 Coming Soon
               </div>
               <div className="w-full h-full relative overflow-hidden bg-slate-900 flex items-center justify-center">
@@ -958,27 +959,28 @@ function ContributorsSection({ isDark }) {
                     onError={() => setImgErrors(prev => ({ ...prev, [i]: true }))}
                   />
                 ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-slate-800 to-slate-900 flex flex-col items-center justify-center p-6 text-center">
-                    <Users className="w-12 h-12 text-slate-400 mb-2"/>
-                    <span className="text-xs text-slate-400 font-mono uppercase tracking-wider">Photo Pending</span>
+                  <div className="w-full h-full bg-gradient-to-br from-slate-800 to-slate-900 flex flex-col items-center justify-center p-3 text-center">
+                    <Users className="w-7 h-7 text-slate-400 mb-1.5"/>
+                    <span className="text-[10px] text-slate-400 font-mono uppercase tracking-wider leading-tight">Photo Pending</span>
                   </div>
                 )}
               </div>
-            </div>
+            </button>
           );
         })}
       </div>
       <div className="flex items-center justify-center gap-2 mb-8">
         {CONTRIBUTORS.map((_, i) => (
           <button
+            type="button"
             key={i}
-            onClick={(e) => { e.stopPropagation(); setFrontIdx(i); }}
-            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${frontIdx === i ? 'bg-[#00B4D8] w-6' : 'bg-slate-600 dark:bg-slate-700'}`}
+            onClick={() => setActiveIdx(i)}
+            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${activeIdx === i ? 'bg-[#00B4D8] w-6' : 'bg-slate-600 dark:bg-slate-700'}`}
             aria-label={`Show contributor ${i + 1}`}
           />
         ))}
       </div>
-      <div className="text-center max-w-md mx-auto animate-fadeIn" key={frontIdx}>
+      <div className="text-center max-w-md mx-auto animate-fadeIn" key={activeIdx}>
         <span className="text-xs font-mono text-slate-400 dark:text-slate-500 uppercase tracking-wider block mb-1">
           {currentContributor.tag}
         </span>
@@ -1000,92 +1002,116 @@ function ContributorsSection({ isDark }) {
 }
 function BackgroundMusic({ isDark }) {
   const audioRef = useRef(null);
-  const [isMuted, setIsMuted] = useState(false);
-  const [audioLoaded, setAudioLoaded] = useState(true);
+  const buttonRef = useRef(null);
+  const userPausedRef = useRef(false);
+  const wasPlayingRef = useRef(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [audioFailed, setAudioFailed] = useState(false);
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('tedder_summit_muted');
-      if (saved !== null) {
-        setIsMuted(saved === 'true');
+      const saved = localStorage.getItem('tedder_summit_music_paused');
+      if (saved === 'true') {
+        userPausedRef.current = true;
       }
     } catch (e) {}
-  }, []);
-  useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
     audio.volume = 0.25;
-    audio.muted = isMuted;
-    const playAudio = () => {
-      if (!isMuted) {
-        audio.play().catch(() => {});
+    const onPlaying = () => setIsPlaying(true);
+    const onPause = () => setIsPlaying(false);
+    const onError = () => setAudioFailed(true);
+    audio.addEventListener('playing', onPlaying);
+    audio.addEventListener('pause', onPause);
+    audio.addEventListener('error', onError);
+    const interactionEvents = ['pointerup', 'click', 'touchend', 'keydown'];
+    const removeInteractionListeners = () => {
+      interactionEvents.forEach((evt) => {
+        document.removeEventListener(evt, handleFirstInteraction, true);
+      });
+    };
+    const tryPlay = () => {
+      if (userPausedRef.current || audioFailed) return;
+      const playPromise = audio.play();
+      if (playPromise && typeof playPromise.then === 'function') {
+        playPromise.then(() => {
+          removeInteractionListeners();
+        }).catch(() => {});
       }
     };
-    playAudio();
-    const handleInteraction = () => {
-      playAudio();
-      window.removeEventListener('click', handleInteraction);
-      window.removeEventListener('touchend', handleInteraction);
-      window.removeEventListener('keydown', handleInteraction);
+    const handleFirstInteraction = (e) => {
+      if (buttonRef.current && buttonRef.current.contains(e.target)) {
+        return;
+      }
+      if (userPausedRef.current) {
+        removeInteractionListeners();
+        return;
+      }
+      tryPlay();
     };
-    window.addEventListener('click', handleInteraction, { once: true });
-    window.addEventListener('touchend', handleInteraction, { once: true });
-    window.addEventListener('keydown', handleInteraction, { once: true });
+    if (!userPausedRef.current) {
+      tryPlay();
+      interactionEvents.forEach((evt) => {
+        document.addEventListener(evt, handleFirstInteraction, true);
+      });
+    }
     const handleVisibility = () => {
       if (document.hidden) {
         if (!audio.paused) {
+          wasPlayingRef.current = true;
           audio.pause();
-          audio._wasPlaying = true;
+        } else {
+          wasPlayingRef.current = false;
         }
       } else {
-        if (audio._wasPlaying && !isMuted) {
+        if (wasPlayingRef.current && !userPausedRef.current) {
           audio.play().catch(() => {});
         }
-        audio._wasPlaying = false;
+        wasPlayingRef.current = false;
       }
     };
     document.addEventListener('visibilitychange', handleVisibility);
-    const handleError = () => {
-      setAudioLoaded(false);
-    };
-    audio.addEventListener('error', handleError);
     return () => {
-      window.removeEventListener('click', handleInteraction);
-      window.removeEventListener('touchend', handleInteraction);
-      window.removeEventListener('keydown', handleInteraction);
+      removeInteractionListeners();
       document.removeEventListener('visibilitychange', handleVisibility);
-      audio.removeEventListener('error', handleError);
+      audio.removeEventListener('playing', onPlaying);
+      audio.removeEventListener('pause', onPause);
+      audio.removeEventListener('error', onError);
     };
-  }, [isMuted]);
-  const toggleMute = () => {
-    const next = !isMuted;
-    setIsMuted(next);
-    try {
-      localStorage.setItem('tedder_summit_muted', String(next));
-    } catch (e) {}
+  }, []);
+  const togglePlayback = () => {
     const audio = audioRef.current;
-    if (audio) {
-      audio.muted = next;
-      if (!next && audio.paused) {
-        audio.play().catch(() => {});
-      }
+    if (!audio) return;
+    if (audio.paused) {
+      userPausedRef.current = false;
+      try {
+        localStorage.setItem('tedder_summit_music_paused', 'false');
+      } catch (e) {}
+      audio.play().catch(() => {});
+    } else {
+      userPausedRef.current = true;
+      try {
+        localStorage.setItem('tedder_summit_music_paused', 'true');
+      } catch (e) {}
+      audio.pause();
     }
   };
-  if (!audioLoaded) {
-    return <audio ref={audioRef} src="music.mp3" loop preload="auto" style={{ display: 'none' }} />;
-  }
   return (
     <>
       <audio ref={audioRef} src="music.mp3" loop preload="auto" style={{ display: 'none' }} />
-      <button
-        onClick={toggleMute}
-        aria-label="Toggle music"
-        className={`fixed bottom-6 left-6 z-40 w-11 h-11 rounded-full flex items-center justify-center border border-[#00B4D8] shadow-lg transition-transform hover:scale-105 active:scale-95 ${
-          isDark ? 'bg-[#0D1B2A] text-[#00B4D8]' : 'bg-white text-slate-900'
-        }`}
-        title={isMuted ? "Unmute Music" : "Mute Music"}
-      >
-        {isMuted ? <VolumeX className="w-5 h-5"/> : <Volume2 className="w-5 h-5"/>}
-      </button>
+      {!audioFailed && (
+        <button
+          ref={buttonRef}
+          type="button"
+          onClick={togglePlayback}
+          aria-label={isPlaying ? "Pause background music" : "Play background music"}
+          className={`fixed bottom-6 left-6 z-40 w-[44px] h-[44px] rounded-full flex items-center justify-center border border-[#00B4D8] shadow-lg transition-transform hover:scale-105 active:scale-95 ${
+            isDark ? 'bg-[#0D1B2A] text-[#00B4D8]' : 'bg-white text-slate-900'
+          }`}
+          title={isPlaying ? "Pause Music" : "Play Music"}
+        >
+          {isPlaying ? <Volume2 className="w-5 h-5"/> : <VolumeX className="w-5 h-5"/>}
+        </button>
+      )}
     </>
   );
 }
