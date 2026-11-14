@@ -975,19 +975,19 @@ function ContributorsSection({ isDark }) {
             type="button"
             key={i}
             onClick={() => setActiveIdx(i)}
-            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${activeIdx === i ? 'bg-[#00B4D8] w-6' : 'bg-slate-600 dark:bg-slate-700'}`}
+            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${activeIdx === i ? 'bg-[#00B4D8] w-6' : (isDark ? 'bg-slate-700' : 'bg-slate-300')}`}
             aria-label={`Show contributor ${i + 1}`}
           />
         ))}
       </div>
       <div className="text-center max-w-md mx-auto animate-fadeIn" key={activeIdx}>
-        <span className="text-xs font-mono text-slate-400 dark:text-slate-500 uppercase tracking-wider block mb-1">
+        <span className={`text-xs font-mono ${isDark ? 'text-slate-400' : 'text-slate-500'} uppercase tracking-wider block mb-1`}>
           {currentContributor.tag}
         </span>
         <h3 className="text-sm sm:text-base font-bold text-[#00B4D8] uppercase tracking-wider mb-2">
           {currentContributor.role}
         </h3>
-        <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+        <p className={`text-xs sm:text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'} leading-relaxed`}>
           {currentContributor.description}
         </p>
       </div>
