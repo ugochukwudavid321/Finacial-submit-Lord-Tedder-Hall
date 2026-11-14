@@ -1345,22 +1345,13 @@ function RegistrationModal({ isOpen, onClose, initialSkill, isDark }) {
                 <>Our records show you have already submitted your registration from this device.</>
               )}
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="flex items-center justify-center max-w-md mx-auto">
               <button
                 onClick={onClose}
-                className="w-full sm:w-auto px-8 py-3 rounded-xl bg-[#00B4D8] text-slate-950 font-bold text-sm shadow-lg shadow-cyan-500/20"
+                className="w-full px-8 py-3 rounded-xl bg-[#00B4D8] text-slate-950 font-bold text-sm shadow-lg shadow-cyan-500/20"
               >
                 Close Window
               </button>
-              <a
-                href={GOOGLE_FORM_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`w-full sm:w-auto px-6 py-3 rounded-xl ${isDark ? 'bg-slate-800 text-slate-200 border-slate-700' : 'bg-slate-100 text-slate-800 border-slate-200'} font-semibold text-sm border flex items-center justify-center gap-2`}
-              >
-                <span>Open Google Form</span>
-                <ExternalLink className="w-4 h-4 text-[#00B4D8]"/>
-              </a>
             </div>
           </div>
         ) : (
